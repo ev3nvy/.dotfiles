@@ -1,5 +1,9 @@
 *
 
+!.vscode/
+!.vscode/extensions.json
+
+
 !.editorconfig
 !.gitignore
 !install.sh

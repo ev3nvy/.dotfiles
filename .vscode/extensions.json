@@ -1,0 +1,44 @@
+{
+    "recommendations": [
+        // general
+        "editorconfig.editorconfig",
+        "equinusocio.vsc-material-theme",
+        "pkief.material-icon-theme",
+        "phil294.git-log--graph",
+        "ritwickdey.liveserver",
+        "usernamehw.errorlens",
+        "waderyan.gitblame",
+        "wakatime.vscode-wakatime",
+
+        // bash
+        "timonwong.shellcheck",
+
+        // clang
+        "notskm.clang-tidy",
+        "xaver.clang-format",
+
+        // css
+        "pranaygp.vscode-css-peek",
+
+        // excalidraw
+        "pomdtr.excalidraw-editor",
+
+        // flatbuffers
+        "floxay.vscode-flatbuffers",
+
+        // js/ts
+        "dbaeumer.vscode-eslint",
+
+        // python
+        "charliermarsh.ruff",
+        "ms-python.debugpy",
+        "ms-python.mypy-type-checker",
+        "ms-python.python",
+
+        // rust
+        "rust-lang.rust-analyzer",
+
+        // toml
+        "tamasfe.even-better-toml",
+	],
+}
