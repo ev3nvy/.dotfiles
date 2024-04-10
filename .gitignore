@@ -13,6 +13,15 @@
 !git/
 !git/.gitconfig
 
+!vscodium/
+!vscodium/.config/
+!vscodium/.config/VSCodium/
+!vscodium/.config/VSCodium/User/
+!vscodium/.config/VSCodium/User/snippets/
+!vscodium/.config/VSCodium/User/snippets/*.json
+!vscodium/.config/VSCodium/User/keybindings.json
+!vscodium/.config/VSCodium/User/settings.json
+
 
 !.editorconfig
 !.gitignore

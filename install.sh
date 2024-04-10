@@ -2,3 +2,4 @@
 
 stow fish
 stow git
+stow vscodium
