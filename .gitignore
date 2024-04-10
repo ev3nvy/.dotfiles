@@ -13,6 +13,11 @@
 !git/
 !git/.gitconfig
 
+!keepassxc/
+!keepassxc/.config/
+!keepassxc/.config/keepassxc/
+!keepassxc/.config/keepassxc/keepassxc.ini
+
 !vscodium/
 !vscodium/.config/
 !vscodium/.config/VSCodium/
