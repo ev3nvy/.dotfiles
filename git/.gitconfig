@@ -1,0 +1,14 @@
+[alias]
+    # https://coderwall.com/p/euwpig/a-better-git-log
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[commit]
+	gpgsign = true
+[core]
+    editor = vim
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[init]
+	defaultBranch = main
+[user]
+	name = ev3nvy
+	email = 12035264+ev3nvy@users.noreply.github.com

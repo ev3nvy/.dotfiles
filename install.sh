@@ -1,1 +1,3 @@
 #!/bin/bash
+
+stow git

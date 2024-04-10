@@ -4,6 +4,10 @@
 !.vscode/extensions.json
 
 
+!git/
+!git/.gitconfig
+
+
 !.editorconfig
 !.gitignore
 !install.sh
