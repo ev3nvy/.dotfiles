@@ -5,27 +5,21 @@
 
 
 !fish/
-!fish/.config/
-!fish/.config/fish/
-!fish/.config/fish/config.fish
-!fish/.config/fish/fish_plugins
+!fish/config.fish
+!fish/fish_plugins
 
 !git/
 !git/.gitconfig
 
 !keepassxc/
-!keepassxc/.config/
-!keepassxc/.config/keepassxc/
-!keepassxc/.config/keepassxc/keepassxc.ini
+!keepassxc/keepassxc.ini
 
 !vscodium/
-!vscodium/.config/
-!vscodium/.config/VSCodium/
-!vscodium/.config/VSCodium/User/
-!vscodium/.config/VSCodium/User/snippets/
-!vscodium/.config/VSCodium/User/snippets/*.json
-!vscodium/.config/VSCodium/User/keybindings.json
-!vscodium/.config/VSCodium/User/settings.json
+!vscodium/User/
+!vscodium/User/snippets/
+!vscodium/User/snippets/*.json
+!vscodium/User/keybindings.json
+!vscodium/User/settings.json
 
 
 !.editorconfig
