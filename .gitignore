@@ -30,5 +30,5 @@
 
 !.editorconfig
 !.gitignore
-!install.sh
+!justfile
 !README.md
