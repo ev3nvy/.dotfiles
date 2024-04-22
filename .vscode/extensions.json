@@ -40,5 +40,5 @@
 
         // toml
         "tamasfe.even-better-toml",
-	],
+    ],
 }
