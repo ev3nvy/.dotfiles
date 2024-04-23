@@ -2,10 +2,11 @@
 This directory contains the dotfiles for my system.
 
 ## Prerequisites
-[Git][git] is required to clone the project and [Stow][stow] is used for symlinking files into the
-home directory.
+[Git][git] is required to clone the project and [just][just] is used for running the required
+commands.
 
-Additionally, [just][just] is used for running the required stow commands.
+[Stow][stow] is used for symlinking files on Linux and [PSDotFiles][PSDotFiles] for symlinking on
+Windows.
 
 ## Installation
 1\. Check out the dotfiles repo in your home directory using git.
@@ -16,7 +17,7 @@ cd .dotfiles
 
 2\. Use [just][just] to create symlinks.
 ```console
-$ just # or just install
+$ just # or "just install"
 ```
 
 > [!NOTE]
@@ -25,5 +26,6 @@ $ just # or just install
 
 
 [git]: https://git-scm.com
-[stow]: https://www.gnu.org/software/stow
 [just]: https://github.com/casey/just
+[stow]: https://www.gnu.org/software/stow
+[PSDotFiles]: https://github.com/ralish/PSDotFiles

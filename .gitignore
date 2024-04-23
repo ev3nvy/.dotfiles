@@ -3,6 +3,14 @@
 !.vscode/
 !.vscode/extensions.json
 
+!metadata/
+!metadata/.git.xml
+!metadata/.vscode.xml
+!metadata/fish.xml
+!metadata/git.xml
+!metadata/keepassxc.xml
+!metadata/vscodium.xml
+
 
 !fish/
 !fish/config.fish
