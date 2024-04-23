@@ -79,8 +79,9 @@
         "editor.tabSize": 4,
     },
     "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "editor.defaultFormatter": "biomejs.biome",
         "editor.formatOnSave": true,
+        "editor.tabSize": 4,
     },
     "[typescript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint",
@@ -95,8 +96,15 @@
         "editor.insertSpaces": false,
         "editor.tabSize": 2,
     },
+    "[jsonc]": {
+        "editor.defaultFormatter": "biomejs.biome",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+    },
 
     // plugin specific settings
+    "biome.enabled": true,
+    "eslint.experimental.useFlatConfig": true,
     "eslint.format.enable": true,
     "excalidraw.theme": "dark",
     "excalidraw.image": {
