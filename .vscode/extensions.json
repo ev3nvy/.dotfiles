@@ -1,10 +1,13 @@
 {
     "recommendations": [
         // general
+        "albymor.increment-selection",
+        "earshinov.simple-alignment",
         "editorconfig.editorconfig",
         "equinusocio.vsc-material-theme",
         "pkief.material-icon-theme",
         "phil294.git-log--graph",
+        "reduckted.vscode-gitweblinks",
         "ritwickdey.liveserver",
         "usernamehw.errorlens",
         "waderyan.gitblame",
@@ -14,6 +17,7 @@
         "timonwong.shellcheck",
 
         // clang
+        "llvm-vs-code-extensions.vscode-clangd",
         "notskm.clang-tidy",
         "xaver.clang-format",
 
@@ -27,6 +31,7 @@
         "floxay.vscode-flatbuffers",
 
         // js/ts
+        "biomejs.biome",
         "dbaeumer.vscode-eslint",
 
         // python
