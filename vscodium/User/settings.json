@@ -36,6 +36,13 @@
         "editorBracketHighlight.foreground6": "#B00B69",
     },
     "materialTheme.accent": "Lime",
+    "material-icon-theme.files.color": "#7CB342",
+    "material-icon-theme.folders.theme": "classic",
+    "material-icon-theme.files.associations": {
+        "justfile": "makefile",
+        "biome.jsonc": "biome",
+        // "README.*.md": "readme", // blocked by: https://github.com/Microsoft/vscode/issues/12493
+    },
 
     // visual
     "editor.cursorBlinking": "phase",
