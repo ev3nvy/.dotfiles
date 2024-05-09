@@ -51,7 +51,9 @@
     "editor.unicodeHighlight.invisibleCharacters": true,
     "terminal.integrated.minimumContrastRatio": 1,
     "window.titleBarStyle": "custom",
+    "workbench.activityBar.location": "hidden",
     "workbench.editor.showTabs": "none",
+    "workbench.sideBar.location": "right",
 
     // behavior
     "editor.minimap.showSlider": "always",
