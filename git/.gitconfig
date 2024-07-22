@@ -6,7 +6,9 @@
 [core]
     editor = vim
 [credential "https://github.com"]
-    helper = !/usr/bin/gh auth git-credential
+    helper = !~/.nix-profile/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+    helper = !~/.nix-profile/bin/gh auth git-credential
 [init]
     defaultBranch = main
 [user]
