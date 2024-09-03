@@ -106,7 +106,7 @@
 
     // plugin specific settings
     "biome.enabled": true,
-    "eslint.experimental.useFlatConfig": true,
+    "eslint.useFlatConfig": true,
     "eslint.format.enable": true,
     "excalidraw.theme": "dark",
     "excalidraw.image": {
