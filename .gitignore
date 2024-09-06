@@ -32,5 +32,6 @@
 
 !.editorconfig
 !.gitignore
+!biome.jsonc
 !justfile
 !README.md

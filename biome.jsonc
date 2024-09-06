@@ -1,0 +1,42 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "files": {
+        "include": [
+            ".vscode/extensions.json",
+            "biome.jsonc",
+            // snippets are detected as their own file type in vscode so biome refuses to format them
+            // "vscodium/User/snippets/*.json",
+            "vscodium/User/keybindings.json",
+            "vscodium/User/settings.json"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 100
+    },
+    "json": {
+        "parser": {
+            "allowComments": true,
+            "allowTrailingCommas": true
+        },
+        "formatter": {
+            "enabled": true,
+            "trailingCommas": "all"
+        }
+    },
+    "overrides": [
+        {
+            // https://code.visualstudio.com/docs/languages/json#_json-with-comments
+            // "The mode also accepts trailing commas, but they are discouraged and the editor will display a warning."
+            "include": ["biome.jsonc"],
+            "json": {
+                "formatter": {
+                    "trailingCommas": "none"
+                }
+            }
+        }
+    ]
+}
