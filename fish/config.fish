@@ -1,5 +1,7 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    pyenv init - | source
+    if command -q pyenv
+        pyenv init - | source
+    end
 end
 rtx activate fish | source
