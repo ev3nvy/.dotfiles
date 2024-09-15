@@ -62,6 +62,7 @@
     "files.associations": {
         "justfile": "makefile",
         ".clang-{format,tidy}": "yaml",
+        ".env": "dotenv",
     },
     "files.eol": "\n",
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
