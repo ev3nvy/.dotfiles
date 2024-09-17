@@ -21,7 +21,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           inputs.lanzaboote.nixosModules.lanzaboote
-          ./nix/systems/ev3nvy-desktop/host.nix
+          ./nix/systems/ev3nvy-desktop
           # inputs.home-manager.nixosModules.default
         ];
       };

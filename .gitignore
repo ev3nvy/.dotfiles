@@ -32,7 +32,7 @@
 !/nix/shared/host.nix
 !/nix/systems/
 !/nix/systems/*
-!/nix/systems/*/host.nix
+!/nix/systems/*/default.nix
 !/nix/systems/*/hardware-configuration.nix
 
 !/vscodium/
