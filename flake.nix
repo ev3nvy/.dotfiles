@@ -16,13 +16,15 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    nixosConfigurations.ev3nvy-desktop = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        ./configuration.nix
-        # inputs.home-manager.nixosModules.default
-      ];
+    nixosConfigurations = {
+      ev3nvy-desktop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs;};
+        modules = [
+          inputs.lanzaboote.nixosModules.lanzaboote
+          ./nix/systems/ev3nvy-desktop/host.nix
+          # inputs.home-manager.nixosModules.default
+        ];
+      };
     };
   };
 }

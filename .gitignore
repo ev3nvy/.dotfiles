@@ -22,6 +22,14 @@
 !/keepassxc/
 !/keepassxc/keepassxc.ini
 
+!/nix/
+!/nix/shared/
+!/nix/shared/host.nix
+!/nix/systems/
+!/nix/systems/*
+!/nix/systems/*/host.nix
+!/nix/systems/*/hardware-configuration.nix
+
 !/vscodium/
 !/vscodium/User/
 !/vscodium/User/snippets/
@@ -33,9 +41,7 @@
 !/.editorconfig
 !/.gitignore
 !/biome.jsonc
-!/configuration.nix
 !/flake.lock
 !/flake.nix
-!/hardware-configuration.nix
 !/justfile
 !/README.md
