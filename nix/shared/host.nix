@@ -32,7 +32,7 @@
 
   nix.nixPath = lib.mkForce [
     "nixpkgs=${inputs.nixpkgs}"
-    # "home-manager=${inputs.home-manager}"
+    "home-manager=${inputs.home-manager}"
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

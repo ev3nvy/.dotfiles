@@ -34,6 +34,7 @@
 !/nix/systems/*
 !/nix/systems/*/default.nix
 !/nix/systems/*/hardware-configuration.nix
+!/nix/systems/*/home.nix
 
 !/vscodium/
 !/vscodium/User/

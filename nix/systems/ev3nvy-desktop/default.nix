@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports =
@@ -11,6 +11,7 @@
       ../../shared/host.nix
       ../../modules/nixos/lanzaboote.nix
       ../../modules/nixos/nvidia.nix
+      inputs.home-manager.nixosModules.default
     ];
 
   # Bootloader.
@@ -68,6 +69,18 @@
     ];
   };
 
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "ev3nvy" = import ./home.nix;
+    };
+  };
+
+  services.syncthing = {
+    enable = true;
+    user = "ev3nvy";
+  };
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -76,11 +89,6 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-    discord
-    vscodium
-    sbctl
-    git
-    gh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
