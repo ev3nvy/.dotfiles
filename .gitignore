@@ -33,5 +33,9 @@
 !.editorconfig
 !.gitignore
 !biome.jsonc
+!configuration.nix
+!flake.lock
+!flake.nix
+!hardware-configuration.nix
 !justfile
 !README.md
