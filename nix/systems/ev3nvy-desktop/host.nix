@@ -9,16 +9,13 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../shared/host.nix
+      ../../modules/nixos/lanzaboote.nix
       ../../modules/nixos/nvidia.nix
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/etc/secureboot";
-  };
 
   networking.hostName = "ev3nvy-desktop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
