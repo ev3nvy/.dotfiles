@@ -25,7 +25,11 @@
     "discord"
   ];
 
-  services.syncthing.enable = true;
+  services = {
+    gpg-agent.enable = true;
+    gpg-agent.pinentryPackage = pkgs.pinentry-qt;
+    syncthing.enable = true;
+  };
 
   home.file = {
     ".gitconfig".source = ../../../git/.gitconfig;
@@ -35,5 +39,8 @@
     ".config/VSCodium/User/settings.json".source = ../../../vscodium/User/settings.json;
   };
 
-  programs.home-manager.enable = true;
+  programs = {
+    gpg.enable = true;
+    home-manager.enable = true;
+  };
 }
