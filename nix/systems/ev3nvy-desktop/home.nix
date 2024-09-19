@@ -28,6 +28,10 @@
   services = {
     gpg-agent.enable = true;
     gpg-agent.pinentryPackage = pkgs.pinentry-qt;
+    kdeconnect = {
+      enable = true;
+      package = pkgs.kdePackages.kdeconnect-kde;
+    };
     syncthing.enable = true;
   };
 
