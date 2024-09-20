@@ -20,7 +20,11 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: {
     nixosConfigurations = {
       ev3nvy-desktop = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";

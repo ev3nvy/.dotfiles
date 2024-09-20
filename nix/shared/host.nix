@@ -3,8 +3,7 @@
   lib,
   inputs,
   ...
-}:
-{
+}: {
   # Locale settings
   time.timeZone = "Europe/Ljubljana";
 
@@ -27,7 +26,6 @@
   };
   console.keyMap = "uk";
 
-
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
   nix.nixPath = lib.mkForce [
@@ -35,7 +33,7 @@
     "home-manager=${inputs.home-manager}"
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   nix.channel.enable = false;
 
