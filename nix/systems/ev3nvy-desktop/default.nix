@@ -72,10 +72,7 @@
     };
   };
 
-  services.syncthing = {
-    enable = true;
-    user = "ev3nvy";
-  };
+  services.pcscd.enable = true;
 
   programs.firefox.enable = true;
 
@@ -83,7 +80,6 @@
     vim
   ];
 
-  services.pcscd.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
