@@ -14,7 +14,10 @@
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
-    discord
+    (discord.override {
+      withOpenASAR = true;
+      withVencord = true;
+    })
     vscodium
     git
     gh
