@@ -98,8 +98,8 @@
         "editor.wordWrap": "off",
     },
     "[nix]": {
-        "editor.insertSpaces": true,
-        "editor.tabSize": 2,
+        "editor.defaultFormatter": "kamadorueda.alejandra",
+        "editor.formatOnSave": true,
     },
     "[python]": {
         "editor.formatOnSave": true,
