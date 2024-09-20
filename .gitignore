@@ -28,6 +28,8 @@
 !/nix/modules/home-manager/*.nix
 !/nix/modules/nixos/
 !/nix/modules/nixos/*.nix
+!/nix/programs/
+!/nix/programs/*.nix
 !/nix/shared/
 !/nix/shared/host.nix
 !/nix/systems/

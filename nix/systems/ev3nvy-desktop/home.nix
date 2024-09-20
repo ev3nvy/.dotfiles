@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ../../programs/unfree.nix
+  ];
   home.username = "ev3nvy";
   home.homeDirectory = "/home/ev3nvy";
 
@@ -22,10 +25,6 @@
     git
     gh
     keepassxc
-  ];
-
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "discord"
   ];
 
   services = {
