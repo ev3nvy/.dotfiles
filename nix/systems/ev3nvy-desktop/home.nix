@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../common.nix
     ../../programs/unfree.nix
   ];
   home.username = "ev3nvy";
@@ -22,7 +23,6 @@
       withVencord = true;
     })
     vscodium
-    git
     gh
     keepassxc
   ];
@@ -41,7 +41,6 @@
   };
 
   home.file = {
-    ".gitconfig".source = ../../../git/.gitconfig;
     ".config/keepassxc/keepassxc.ini".source = ../../../keepassxc/keepassxc.ini;
     ".config/VSCodium/User/snippets".source = ../../../vscodium/User/snippets;
     ".config/VSCodium/User/keybindings.json".source = ../../../vscodium/User/keybindings.json;
