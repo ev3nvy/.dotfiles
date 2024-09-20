@@ -60,9 +60,6 @@
     isNormalUser = true;
     description = "ev3nvy";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    ];
   };
 
   home-manager = {
