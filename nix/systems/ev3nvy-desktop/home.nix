@@ -22,7 +22,6 @@
       withOpenASAR = true;
       withVencord = true;
     })
-    vscodium
     gh
     keepassxc
   ];
@@ -42,9 +41,6 @@
 
   home.file = {
     ".config/keepassxc/keepassxc.ini".source = ../../../keepassxc/keepassxc.ini;
-    ".config/VSCodium/User/snippets".source = ../../../vscodium/User/snippets;
-    ".config/VSCodium/User/keybindings.json".source = ../../../vscodium/User/keybindings.json;
-    ".config/VSCodium/User/settings.json".source = ../../../vscodium/User/settings.json;
   };
 
   programs = {
