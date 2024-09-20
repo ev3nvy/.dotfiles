@@ -28,8 +28,11 @@
   ];
 
   services = {
-    gpg-agent.enable = true;
-    gpg-agent.pinentryPackage = pkgs.pinentry-qt;
+    gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 3600;
+      pinentryPackage = pkgs.pinentry-qt;
+    };
     kdeconnect = {
       enable = true;
       package = pkgs.kdePackages.kdeconnect-kde;
