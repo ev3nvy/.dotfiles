@@ -128,4 +128,5 @@
         "exportWithBackground": false,
         "exportWithDarkMode": true,
     },
+    "nix.enableLanguageServer": true,
 }

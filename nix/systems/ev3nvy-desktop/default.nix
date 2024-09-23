@@ -14,7 +14,6 @@
     ../../shared/host.nix
     ../../modules/nixos/lanzaboote.nix
     ../../modules/nixos/nvidia.nix
-    inputs.home-manager.nixosModules.default
   ];
 
   # Bootloader.
@@ -84,6 +83,8 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    inputs.alejandra.defaultPackage.${system}
+    inputs.nil.packages.${system}.default
   ];
 
   # This value determines the NixOS release from which the default

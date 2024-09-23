@@ -18,6 +18,11 @@
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nil = {
+      url = "github:oxalica/nil";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -33,9 +38,6 @@
           inputs.lanzaboote.nixosModules.lanzaboote
           ./nix/systems/ev3nvy-desktop
           inputs.home-manager.nixosModules.default
-          {
-            environment.systemPackages = [inputs.alejandra.defaultPackage.${system}];
-          }
         ];
       };
     };

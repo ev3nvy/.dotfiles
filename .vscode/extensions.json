@@ -34,6 +34,10 @@
         "biomejs.biome",
         "dbaeumer.vscode-eslint",
 
+        // nix
+        "jnoortheen.nix-ide",
+        "kamadorueda.alejandra",
+
         // python
         "charliermarsh.ruff",
         "ms-python.debugpy",
