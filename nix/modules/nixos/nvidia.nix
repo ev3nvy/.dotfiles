@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   hardware.graphics.enable = true;
 
   services.xserver.videoDrivers = ["nvidia"];
@@ -33,4 +37,10 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "nvidia-settings"
+      "nvidia-x11"
+    ];
 }
