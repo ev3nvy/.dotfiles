@@ -41,5 +41,15 @@
         ];
       };
     };
+
+    devShell.x86_64-linux = self.devShells.x86_64-linux.default;
+    devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+      buildInputs = [
+        inputs.alejandra.defaultPackage.x86_64-linux
+        inputs.nil.packages.x86_64-linux.default
+        nixpkgs.legacyPackages.x86_64-linux.biome
+        nixpkgs.legacyPackages.x86_64-linux.just
+      ];
+    };
   };
 }

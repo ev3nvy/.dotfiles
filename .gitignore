@@ -45,6 +45,7 @@
 
 
 !/.editorconfig
+!/.envrc
 !/.gitignore
 !/biome.jsonc
 !/flake.lock
