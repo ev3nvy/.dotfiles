@@ -37,6 +37,4 @@
   nix.channel.enable = false;
 
   nixpkgs.config.allowUnfree = true;
-
-  programs.fish.enable = true;
 }
