@@ -24,8 +24,6 @@
 
 !/nix/
 !/nix/modules/
-!/nix/modules/home-manager/
-!/nix/modules/home-manager/*.nix
 !/nix/modules/nixos/
 !/nix/modules/nixos/*.nix
 !/nix/programs/

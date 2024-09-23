@@ -31,7 +31,7 @@
     ...
   } @ inputs: {
     nixosConfigurations = {
-      ev3nvy-desktop = nixpkgs.lib.nixosSystem rec {
+      ev3nvy-desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {inherit inputs;};
         modules = [
