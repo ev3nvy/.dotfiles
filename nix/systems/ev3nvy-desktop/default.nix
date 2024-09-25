@@ -40,6 +40,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # https://github.com/systemd/systemd/issues/33412
+  systemd.units."dev-tpmrm0.device".enable = false;
+
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
