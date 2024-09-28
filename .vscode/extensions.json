@@ -47,6 +47,7 @@
 
         // rust
         "rust-lang.rust-analyzer",
+        "serayuzgur.crates",
 
         // toml
         // TODO: remove following note once extension gets fixed (https://github.com/tamasfe/taplo/issues/624)

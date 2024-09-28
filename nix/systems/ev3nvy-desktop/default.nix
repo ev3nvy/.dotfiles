@@ -45,7 +45,7 @@
   systemd.units."dev-tpmrm0.device".enable = false;
 
   networking.useDHCP = lib.mkForce false;
-  networking.interfaces.enp24s0.ipv4.addresses = [
+  networking.interfaces."enp24s0".ipv4.addresses = [
     {
       address = "192.168.1.2";
       prefixLength = 24;
@@ -108,8 +108,6 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    inputs.alejandra.defaultPackage.${system}
-    inputs.nil.packages.${system}.default
   ];
 
   # This value determines the NixOS release from which the default
