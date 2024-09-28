@@ -7,71 +7,62 @@
 }: let
   cfg = config.programs.vscodium;
 
-  extensionsNix = pkgs.vscode-extensions;
-  extensionsNixFlake = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+  extensionsNix = inputs.nix-vscode-extensions.extensions.${pkgs.system};
 
   # TODO: use profiles once implemented (https://github.com/nix-community/home-manager/issues/3822)
   # TODO: this is also defined in ".vscode/extensions.json"; move to single file and read from there
-  generalExtensions =
-    (with extensionsNix; [
-      albymor.increment-selection
-      editorconfig.editorconfig
-      equinusocio.vsc-material-theme
-      mkhl.direnv
-      pkief.material-icon-theme
-      ritwickdey.liveserver
-      usernamehw.errorlens
-      waderyan.gitblame
-    ])
-    ++ (with extensionsNixFlake.open-vsx; [
-      earshinov.simple-alignment
-      phil294.git-log--graph
-      reduckted.vscode-gitweblinks
-      wakatime.vscode-wakatime
-    ]);
-  bashExtensions = with extensionsNix; [
+  generalExtensions = with extensionsNix.open-vsx; [
+    albymor.increment-selection
+    earshinov.simple-alignment
+    editorconfig.editorconfig
+    equinusocio.vsc-material-theme
+    mkhl.direnv
+    phil294.git-log--graph
+    pkief.material-icon-theme
+    reduckted.vscode-gitweblinks
+    ritwickdey.liveserver
+    usernamehw.errorlens
+    waderyan.gitblame
+    wakatime.vscode-wakatime
+  ];
+  bashExtensions = with extensionsNix.open-vsx; [
     timonwong.shellcheck
   ];
-  clangExtensions =
-    (with extensionsNix; [
-      llvm-vs-code-extensions.vscode-clangd
-      xaver.clang-format
-    ])
-    ++ (with extensionsNixFlake.open-vsx; [
-      notskm.clang-tidy
-    ]);
-  cssExtensions = with extensionsNixFlake.open-vsx; [
+  clangExtensions = with extensionsNix.open-vsx; [
+    llvm-vs-code-extensions.vscode-clangd
+    notskm.clang-tidy
+    xaver.clang-format
+  ];
+  cssExtensions = with extensionsNix.open-vsx; [
     pranaygp.vscode-css-peek
   ];
-  excalidrawExtensions = with extensionsNixFlake.open-vsx; [
+  excalidrawExtensions = with extensionsNix.open-vsx; [
     pomdtr.excalidraw-editor
   ];
-  flatbuffersExtensions = with extensionsNixFlake.open-vsx; [
+  flatbuffersExtensions = with extensionsNix.open-vsx; [
     floxay.vscode-flatbuffers
   ];
-  javascriptExtensions = with extensionsNixFlake.open-vsx; [
+  javascriptExtensions = with extensionsNix.open-vsx; [
     biomejs.biome
   ];
-  nixExtensions = with extensionsNix; [
+  nixExtensions = with extensionsNix.open-vsx; [
     jnoortheen.nix-ide
     kamadorueda.alejandra
   ];
-  pythonExtensions =
-    (with extensionsNix; [
-      charliermarsh.ruff
-      ms-python.debugpy
-      ms-python.python
-    ])
-    ++ (with extensionsNixFlake.open-vsx; [
-      ms-python.mypy-type-checker
-    ]);
-  rustExtensions = with extensionsNix;
+  pythonExtensions = with extensionsNix.open-vsx; [
+    charliermarsh.ruff
+    ms-python.debugpy
+    ms-python.mypy-type-checker
+    ms-python.python
+  ];
+  rustExtensions = with extensionsNix.open-vsx;
     [
       rust-lang.rust-analyzer
       serayuzgur.crates
     ]
     ++ tomlExtensions;
-  tomlExtensions = with extensionsNix; [
+  # openvsx release is broken (see https://github.com/tamasfe/taplo/issues/624)
+  tomlExtensions = with extensionsNix.vscode-marketplace; [
     tamasfe.even-better-toml
   ];
 in {

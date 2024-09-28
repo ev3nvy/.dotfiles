@@ -59,6 +59,7 @@
     "editor.minimap.showSlider": "always",
     "editor.selectionClipboard": false, // middle-click paste
     "editor.tabSize": 2,
+    "extensions.autoCheckUpdates": false,
     "files.associations": {
         "justfile": "makefile",
         ".clang-{format,tidy}": "yaml",
@@ -66,6 +67,7 @@
     },
     "files.eol": "\n",
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "update.mode": "none",
 
     // language-specific overrides
     "[c]": {
