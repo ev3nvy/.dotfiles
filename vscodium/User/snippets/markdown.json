@@ -6,8 +6,8 @@
             "  <summary>$1</summary>",
             "",
             "  $0",
-            "</details>",
+            "</details>"
         ],
-        "description": "Insert collapsible element",
-    },
+        "description": "Insert collapsible element"
+    }
 }

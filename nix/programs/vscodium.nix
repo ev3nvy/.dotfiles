@@ -103,6 +103,11 @@ in {
 
         # TODO: parse extensions from recommendations: grep -o '^[^/]*' .vscode/extensions.json | jq '.recommendations'
         extensions = generalExtensions;
+
+        languageSnippets = {
+          markdown = lib.importJSON ../../vscodium/User/snippets/markdown.json;
+          shellscript = lib.importJSON ../../vscodium/User/snippets/shellscript.json;
+        };
       }
       (lib.mkIf cfg.extensions.bash.enable {
         extensions = bashExtensions;
@@ -137,8 +142,6 @@ in {
     ];
 
     home.file = {
-      # TODO: use `languageSnippets`/`globalSnippets` instead
-      ".config/VSCodium/User/snippets".source = ../../vscodium/User/snippets;
       ".config/VSCodium/User/keybindings.json".source = ../../vscodium/User/keybindings.json;
       ".config/VSCodium/User/settings.json".source = ../../vscodium/User/settings.json;
     };

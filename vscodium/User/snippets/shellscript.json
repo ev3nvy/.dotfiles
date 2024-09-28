@@ -3,8 +3,8 @@
         "prefix": "shebang",
         "body": [
             "#!/bin/bash",
-            "$0",
+            "$0"
         ],
-        "description": "Insert default bash shebang",
-    },
+        "description": "Insert default bash shebang"
+    }
 }
