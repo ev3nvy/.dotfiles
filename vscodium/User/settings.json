@@ -64,8 +64,9 @@
     "extensions.autoCheckUpdates": false,
     "files.associations": {
         "justfile": "makefile",
-        ".clang-{format,tidy}": "yaml",
+        ".clang{d,-format,-tidy}": "yaml",
         ".env": "dotenv",
+        "*.h": "c",
     },
     "files.eol": "\n",
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
@@ -73,6 +74,11 @@
 
     // language-specific overrides
     "[c]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+    },
+    "[cpp]": {
         "editor.defaultFormatter": "xaver.clang-format",
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
@@ -124,6 +130,7 @@
 
     // plugin specific settings
     "biome.enabled": true,
+    "clangd.arguments": ["--log=verbose"],
     "eslint.useFlatConfig": true,
     "eslint.format.enable": true,
     "excalidraw.theme": "dark",
