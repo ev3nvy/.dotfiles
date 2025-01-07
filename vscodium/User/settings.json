@@ -46,6 +46,7 @@
 
     // visual
     "editor.cursorBlinking": "phase",
+    "editor.lineNumbers": "relative",
     "editor.renderWhitespace": "trailing",
     "editor.semanticHighlighting.enabled": true, // color function params in body differently, etc.
     "editor.unicodeHighlight.invisibleCharacters": true,
