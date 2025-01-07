@@ -85,6 +85,9 @@
     },
     "[javascript]": {
         "editor.defaultFormatter": "biomejs.biome",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.biome": "explicit",
+        },
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
     },
