@@ -61,8 +61,7 @@
       serayuzgur.crates
     ]
     ++ tomlExtensions;
-  # openvsx release is broken (see https://github.com/tamasfe/taplo/issues/624)
-  tomlExtensions = with extensionsNix.vscode-marketplace; [
+  tomlExtensions = with extensionsNix.open-vsx; [
     tamasfe.even-better-toml
   ];
 in {

@@ -50,8 +50,6 @@
         "serayuzgur.crates",
 
         // toml
-        // TODO: remove following note once extension gets fixed (https://github.com/tamasfe/taplo/issues/624)
-        // NOTE: make sure to install v0.19.0 instead of v0.19.1 because it just doesn't work
         "tamasfe.even-better-toml",
     ],
     // this requires an extension which is not available on Open VSX, instead this just serves as a reminder
