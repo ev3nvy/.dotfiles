@@ -64,7 +64,7 @@
               mkhl.direnv
             ];
         });
-        codium-test = pkgs.writeShellScriptBin "codium-test" ''
+        codium-dev = pkgs.writeShellScriptBin "codium-dev" ''
           set -e
           dir="''${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles-codium"
           ${pkgs.coreutils}/bin/mkdir -p "$dir/User"
@@ -113,7 +113,7 @@
           (pkgs.writeShellScriptBin "nixos_remove_generations" "nix-env --delete-generations --profile /nix/var/nix/profiles/system 2d")
         ]
         ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
-          self.packages."x86_64-linux".codium-test
+          self.packages."x86_64-linux".codium-dev
         ];
     };
   };
