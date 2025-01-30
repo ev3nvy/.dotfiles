@@ -109,6 +109,8 @@
           (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --flake .")
           (pkgs.writeShellScriptBin "nixos_upgrade" "nix flake update")
           (pkgs.writeShellScriptBin "nixos_upgrade_switch" "nixos-rebuild switch --recreate-lock-file --flake .")
+          (pkgs.writeShellScriptBin "nixos_clean" "nix-collect-garbage --delete-old")
+          (pkgs.writeShellScriptBin "nixos_remove_generations" "nix-env --delete-generations --profile /nix/var/nix/profiles/system 2d")
         ]
         ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
           self.packages."x86_64-linux".codium-test
