@@ -66,7 +66,7 @@
         });
         codium-test = pkgs.writeShellScriptBin "codium-test" ''
           set -e
-          dir="''${XDG_CACHE_HOME:-$HOME/.config}/dotfiles-codium"
+          dir="''${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles-codium"
           ${pkgs.coreutils}/bin/mkdir -p "$dir/User"
           cat >"$dir/User/settings.json" <<EOF
           {
