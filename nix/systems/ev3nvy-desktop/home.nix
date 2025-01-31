@@ -1,7 +1,6 @@
 {
   pkgs,
   inputs,
-  system,
   ...
 }: {
   imports = [
@@ -27,8 +26,8 @@
     })
     gh
     keepassxc
-    inputs.alejandra.defaultPackage.${system}
-    inputs.nil.packages.${system}.default
+    inputs.alejandra.defaultPackage.${pkgs.system}
+    inputs.nil.packages.${pkgs.system}.default
   ];
 
   services = {

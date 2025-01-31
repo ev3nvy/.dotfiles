@@ -37,11 +37,13 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
+    supportedSystems = ["x86_64-linux"];
+    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
   in {
     nixosConfigurations = {
       ev3nvy-desktop = nixpkgs.lib.nixosSystem {
-        system = system;
-        specialArgs = {inherit inputs system;};
+        inherit system;
+        specialArgs = {inherit inputs;};
         modules = [
           inputs.lanzaboote.nixosModules.lanzaboote
           ./nix/systems/ev3nvy-desktop
@@ -50,73 +52,88 @@
       };
     };
 
-    packages.${system} = let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-      with pkgs; rec {
-        codium = vscode-with-extensions.override (prev: {
-          vscode = vscodium;
-          vscodeExtensions = with vscode-extensions;
-            prev.vscodeExtensions
-            or []
-            ++ [
-              biomejs.biome
-              jnoortheen.nix-ide
-              kamadorueda.alejandra
-              mkhl.direnv
-            ];
-        });
-        codium-dev = pkgs.writeShellScriptBin "codium-dev" ''
-          set -e
-          dir="''${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles-codium"
-          ${pkgs.coreutils}/bin/mkdir -p "$dir/User"
-          cat >"$dir/User/settings.json" <<EOF
-          {
-              "files.associations": {
-                  "justfile": "makefile",
-                  ".env": "dotenv",
-              },
-              "[json]": {
-                  "editor.defaultFormatter": "biomejs.biome",
-                  "editor.formatOnSave": true,
-                  "editor.tabSize": 4,
-              },
-              "[jsonc]": {
-                  "editor.defaultFormatter": "biomejs.biome",
-                  "editor.formatOnSave": true,
-                  "editor.tabSize": 4,
-              },
-              "[nix]": {
-                  "editor.defaultFormatter": "kamadorueda.alejandra",
-                  "editor.formatOnSave": true,
-              },
-              "biome.enabled": true,
-              "nix.enableLanguageServer": true,
-          }
-          EOF
-          exec ${codium}/bin/codium --user-data-dir "$dir" "$@"
-        '';
-      };
-
-    devShell.${system} = self.devShells.${system}.default;
-    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
-      buildInputs = let
-        pkgs = nixpkgs.legacyPackages.${system};
+    packages = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
       in
-        [
-          inputs.alejandra.defaultPackage.${system}
-          inputs.nil.packages.${system}.default
-          pkgs.biome
-          pkgs.just
-          (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --flake .")
-          (pkgs.writeShellScriptBin "nixos_upgrade" "nix flake update")
-          (pkgs.writeShellScriptBin "nixos_upgrade_switch" "nixos-rebuild switch --recreate-lock-file --flake .")
-          (pkgs.writeShellScriptBin "nixos_clean" "nix-collect-garbage --delete-old")
-          (pkgs.writeShellScriptBin "nixos_remove_generations" "nix-env --delete-generations --profile /nix/var/nix/profiles/system 2d")
-        ]
-        ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
-          self.packages.${system}.codium-dev
-        ];
-    };
+        with pkgs; rec {
+          codium = vscode-with-extensions.override (prev: {
+            vscode = vscodium;
+            vscodeExtensions = with vscode-extensions;
+              prev.vscodeExtensions
+              or []
+              ++ [
+                biomejs.biome
+                jnoortheen.nix-ide
+                kamadorueda.alejandra
+                mkhl.direnv
+              ];
+          });
+          codium-dev = pkgs.writeShellScriptBin "codium-dev" ''
+            set -e
+            dir="''${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles-codium"
+            ${pkgs.coreutils}/bin/mkdir -p "$dir/User"
+            cat >"$dir/User/settings.json" <<EOF
+            {
+                "files.associations": {
+                    "justfile": "makefile",
+                    ".env": "dotenv",
+                },
+                "[json]": {
+                    "editor.defaultFormatter": "biomejs.biome",
+                    "editor.formatOnSave": true,
+                    "editor.tabSize": 4,
+                },
+                "[jsonc]": {
+                    "editor.defaultFormatter": "biomejs.biome",
+                    "editor.formatOnSave": true,
+                    "editor.tabSize": 4,
+                },
+                "[nix]": {
+                    "editor.defaultFormatter": "kamadorueda.alejandra",
+                    "editor.formatOnSave": true,
+                },
+                "biome.enabled": true,
+                "nix.enableLanguageServer": true,
+            }
+            EOF
+            exec ${codium}/bin/codium --user-data-dir "$dir" "$@"
+          '';
+        }
+    );
+
+    devShell = forAllSystems (
+      system: {
+        # does this make sense?
+        system = self.devShells.${system}.default;
+      }
+    );
+    devShells = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in {
+        default = pkgs.mkShell {
+          buildInputs =
+            [
+              inputs.alejandra.defaultPackage.${system}
+              inputs.nil.packages.${system}.default
+              pkgs.biome
+              pkgs.just
+              (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --flake .")
+              (pkgs.writeShellScriptBin "nixos_upgrade" "nix flake update")
+              (pkgs.writeShellScriptBin "nixos_upgrade_switch" "nixos-rebuild switch --recreate-lock-file --flake .")
+              (pkgs.writeShellScriptBin "nixos_clean" "nix-collect-garbage --delete-old")
+              (pkgs.writeShellScriptBin "nixos_remove_generations" "nix-env --delete-generations --profile /nix/var/nix/profiles/system 2d")
+            ]
+            ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
+              self.packages.${system}.codium-dev
+            ];
+        };
+      }
+    );
   };
 }
