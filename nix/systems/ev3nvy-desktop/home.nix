@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}: {
   imports = [
     ../common.nix
     ../../programs/unfree.nix
@@ -22,6 +27,8 @@
     })
     gh
     keepassxc
+    inputs.alejandra.defaultPackage.${system}
+    inputs.nil.packages.${system}.default
   ];
 
   services = {

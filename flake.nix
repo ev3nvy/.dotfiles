@@ -35,11 +35,13 @@
     self,
     nixpkgs,
     ...
-  } @ inputs: {
+  } @ inputs: let
+    system = "x86_64-linux";
+  in {
     nixosConfigurations = {
       ev3nvy-desktop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
+        system = system;
+        specialArgs = {inherit inputs system;};
         modules = [
           inputs.lanzaboote.nixosModules.lanzaboote
           ./nix/systems/ev3nvy-desktop
@@ -48,8 +50,8 @@
       };
     };
 
-    packages."x86_64-linux" = let
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+    packages.${system} = let
+      pkgs = nixpkgs.legacyPackages.${system};
     in
       with pkgs; rec {
         codium = vscode-with-extensions.override (prev: {
@@ -96,14 +98,14 @@
         '';
       };
 
-    devShell."x86_64-linux" = self.devShells."x86_64-linux".default;
-    devShells."x86_64-linux".default = nixpkgs.legacyPackages."x86_64-linux".mkShell {
+    devShell.${system} = self.devShells.${system}.default;
+    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
       buildInputs = let
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        pkgs = nixpkgs.legacyPackages.${system};
       in
         [
-          inputs.alejandra.defaultPackage."x86_64-linux"
-          inputs.nil.packages."x86_64-linux".default
+          inputs.alejandra.defaultPackage.${system}
+          inputs.nil.packages.${system}.default
           pkgs.biome
           pkgs.just
           (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --flake .")
@@ -113,7 +115,7 @@
           (pkgs.writeShellScriptBin "nixos_remove_generations" "nix-env --delete-generations --profile /nix/var/nix/profiles/system 2d")
         ]
         ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
-          self.packages."x86_64-linux".codium-dev
+          self.packages.${system}.codium-dev
         ];
     };
   };

@@ -5,6 +5,7 @@
   lib,
   pkgs,
   inputs,
+  system,
   ...
 }: {
   imports = [
@@ -86,7 +87,7 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit inputs system;};
     users = {
       "ev3nvy" = import ./home.nix;
     };
