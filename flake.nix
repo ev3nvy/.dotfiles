@@ -119,17 +119,22 @@
     );
     devShells = forAllSystems (
       system: let
+        overlays = [(import inputs.rust-overlay)];
         pkgs = import nixpkgs {
-          inherit system;
+          inherit system overlays;
+        };
+        rustVersion = "latest";
+        rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
+          extensions = [
+            "rust-src"
+            "rust-analyzer"
+            "clippy"
+          ];
         };
       in {
         default = pkgs.mkShell {
           buildInputs =
             [
-              inputs.alejandra.defaultPackage.${system}
-              inputs.nil.packages.${system}.default
-              pkgs.biome
-              pkgs.just
               (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --flake .")
               (pkgs.writeShellScriptBin "nixos_upgrade" "nix flake update")
               (pkgs.writeShellScriptBin "nixos_upgrade_switch" "nixos-rebuild switch --recreate-lock-file --flake .")
@@ -139,6 +144,46 @@
             ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
               self.packages.${system}.codium-dev
             ];
+        };
+        biome = pkgs.mkShell {
+          nativeBuildInputs = [
+            pkgs.biome
+          ];
+        };
+        flatbuffers = pkgs.mkShell {
+          nativeBuildInputs = [
+            pkgs.flatbuffers
+          ];
+        };
+        just = pkgs.mkShell {
+          nativeBuildInputs = [
+            pkgs.just
+          ];
+        };
+        nix = pkgs.mkShell {
+          nativeBuildInputs = [
+            inputs.alejandra.defaultPackage.${system}
+            inputs.nil.packages.${system}.default
+          ];
+        };
+        rust = pkgs.mkShell {
+          inputsFrom = with self.devShells.${system}; [toml];
+          nativeBuildInputs = [
+            rust
+            pkgs.bacon
+            pkgs.cargo-edit
+            pkgs.cargo-expand
+            pkgs.cargo-msrv
+            pkgs.cargo-update # to manage executables not available in nixpkgs
+            pkgs.cargo-watch
+            pkgs.cargo-workspaces
+            pkgs.cargo-zigbuild
+          ];
+        };
+        toml = pkgs.mkShell {
+          nativeBuildInputs = [
+            pkgs.taplo
+          ];
         };
       }
     );
