@@ -28,6 +28,7 @@
     keepassxc
     inputs.alejandra.defaultPackage.${pkgs.system}
     inputs.nil.packages.${pkgs.system}.default
+    pkgs.nerd-fonts.jetbrains-mono
   ];
 
   services = {
@@ -52,7 +53,24 @@
       enable = true;
       nix-direnv.enable = true;
     };
-    fish.enable = true;
+    eza.enable = true;
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        set fish_greeting # Disable greeting
+      '';
+    };
+    ghostty = {
+      enable = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      settings = {
+        auto-update = "check";
+        theme = "MaterialDarker";
+        font-family = "JetBrainsMono Nerd Font";
+        font-size = 12;
+      };
+    };
     gpg.enable = true;
     home-manager.enable = true;
   };
