@@ -171,6 +171,7 @@
           nativeBuildInputs = [
             rust
             pkgs.bacon
+            pkgs.cargo-deny
             pkgs.cargo-edit
             pkgs.cargo-expand
             pkgs.cargo-msrv
