@@ -122,6 +122,10 @@
         overlays = [(import inputs.rust-overlay)];
         pkgs = import nixpkgs {
           inherit system overlays;
+          config.allowUnfreePredicate = pkg:
+            builtins.elem (nixpkgs.lib.getName pkg) [
+              "davinci-resolve"
+            ];
         };
         rustVersion = "latest";
         rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
@@ -196,6 +200,12 @@
         toml = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.taplo
+          ];
+        };
+        videoEditing = pkgs.mkShell {
+          packages = [
+            pkgs.davinci-resolve
+            pkgs.handbrake
           ];
         };
       }
