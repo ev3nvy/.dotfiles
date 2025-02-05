@@ -94,16 +94,21 @@
 
   services.pcscd.enable = true;
 
-  programs.firefox.enable = true;
-  # https://nixos.wiki/wiki/Fish
-  programs.bash = {
-    interactiveShellInit = ''
-      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-      then
-        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-      fi
-    '';
+  programs = {
+    # https://nixos.wiki/wiki/Fish
+    bash = {
+      interactiveShellInit = ''
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+        fi
+      '';
+    };
+    firefox.enable = true;
+    # firewall is opened by default;
+    # see: https://github.com/NixOS/nixpkgs/blob/799ba5bffed04ced7067a91798353d360788b30d/nixos/modules/programs/localsend.nix#L17-L21
+    localsend.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
