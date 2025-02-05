@@ -166,6 +166,18 @@
             inputs.nil.packages.${system}.default
           ];
         };
+        nodejs-lts-jod = let
+          nodejs = pkgs.callPackage "${nixpkgs}/pkgs/development/web/nodejs/v22.nix" {
+            inherit (pkgs) python3 openssl;
+          };
+        in
+          pkgs.mkShell {
+            inputsFrom = with self.devShells.${system}; [biome];
+
+            buildInputs = [
+              nodejs
+            ];
+          };
         rust = pkgs.mkShell {
           inputsFrom = with self.devShells.${system}; [toml];
           nativeBuildInputs = [
