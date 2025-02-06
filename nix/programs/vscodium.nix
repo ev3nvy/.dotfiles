@@ -7,6 +7,8 @@
 }: let
   cfg = config.programs.vscodium;
 
+  jsonc = import ../lib/jsonc-with-trailing-commas.nix {inherit lib;};
+
   extensionsNix = inputs.nix-vscode-extensions.extensions.${pkgs.system};
 
   # TODO: use profiles once implemented (https://github.com/nix-community/home-manager/issues/3822)
@@ -87,9 +89,9 @@ in {
       {
         enable = true;
         package = pkgs.vscodium;
-        # TODO: figure out a way to make this work (json files have comments and trailing commas)
-        # userSettings = lib.importJSON ../../vscodium/User/settings.json;
-        # keybindings = lib.importJSON ../../vscodium/User/keybindings.json;
+
+        userSettings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../vscodium/User/settings.json);
+        keybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../vscodium/User/keybindings.json);
 
         # TODO: parse extensions from recommendations: grep -o '^[^/]*' .vscode/extensions.json | jq '.recommendations'
         extensions = generalExtensions;
@@ -130,10 +132,5 @@ in {
         extensions = tomlExtensions;
       })
     ];
-
-    home.file = {
-      ".config/VSCodium/User/keybindings.json".source = ../../vscodium/User/keybindings.json;
-      ".config/VSCodium/User/settings.json".source = ../../vscodium/User/settings.json;
-    };
   };
 }
