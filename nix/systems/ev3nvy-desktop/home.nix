@@ -90,6 +90,7 @@
       };
     };
     gpg.enable = true;
+    mpv.enable = true;
     home-manager.enable = true;
   };
 }
