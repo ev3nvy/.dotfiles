@@ -1,14 +1,11 @@
-{
-  pkgs,
-  username,
-  ...
-}: {
+{username, ...}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./extra
     ../../shared/host.nix
     ../../modules/nixos/system/nvidia.nix
+    ../../modules/nixos/system
     ../../modules/nixos/programs
   ];
 
@@ -52,17 +49,10 @@
 
   services.pcscd.enable = true;
 
+  customModule = {
+    system.enable = true;
+  };
   programs = {
-    # https://nixos.wiki/wiki/Fish
-    bash = {
-      interactiveShellInit = ''
-        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-        then
-          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-        fi
-      '';
-    };
     firefox.enable = true;
   };
 

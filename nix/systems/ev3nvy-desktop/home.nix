@@ -72,12 +72,6 @@
       nix-direnv.enable = true;
     };
     eza.enable = true;
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        set fish_greeting # Disable greeting
-      '';
-    };
     ghostty = {
       enable = true;
       enableBashIntegration = true;

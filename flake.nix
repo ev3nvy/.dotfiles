@@ -74,7 +74,10 @@
         modules =
           [
             ./nix/systems/${hostname}
-            {networking.hostName = hostname;}
+            {
+              networking.hostName = hostname;
+            }
+            ./nix/modules/nixos/metadata.nix
           ]
           ++ (
             if useLanzaboote
@@ -89,11 +92,16 @@
             then [
               inputs.home-manager.nixosModules.home-manager
               {
+                customModule.metadata.homeManagerUsername = username;
+
                 home-manager = {
                   # TODO: look into what these do
                   # useUserPackages = true;
                   # useGlobalPkgs = false;
-                  extraSpecialArgs = {inherit inputs username homeDirectory;};
+                  extraSpecialArgs = {
+                    inherit inputs;
+                    inherit username homeDirectory;
+                  };
                   sharedModules = [inputs.nix-index-database.hmModules.nix-index];
                   users."${username}" = import ./nix/systems/${hostname}/home.nix;
                 };
