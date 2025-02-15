@@ -34,10 +34,12 @@
 !/nix/shared/
 !/nix/shared/host.nix
 !/nix/systems/
-!/nix/systems/*
-!/nix/systems/*/default.nix
-!/nix/systems/*/hardware-configuration.nix
-!/nix/systems/*/home.nix
+!/nix/systems/**
+!/nix/systems/**/extra/
+!/nix/systems/**/extra/*.nix
+!/nix/systems/**/default.nix
+!/nix/systems/**/hardware-configuration.nix
+!/nix/systems/**/home.nix
 
 !/vscodium/
 !/vscodium/User/
