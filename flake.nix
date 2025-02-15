@@ -162,12 +162,6 @@
         }
     );
 
-    devShell = forAllSystems (
-      system: {
-        # does this make sense?
-        system = self.devShells.${system}.default;
-      }
-    );
     devShells = forAllSystems (
       system: let
         overlays = [(import inputs.rust-overlay)];
