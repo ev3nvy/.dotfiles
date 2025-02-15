@@ -41,10 +41,6 @@
       defaultCacheTtl = 3600;
       pinentryPackage = pkgs.pinentry-qt;
     };
-    kdeconnect = {
-      enable = true;
-      package = pkgs.kdePackages.kdeconnect-kde;
-    };
     syncthing.enable = true;
   };
 

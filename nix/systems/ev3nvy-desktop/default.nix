@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ../../shared/host.nix
     ../../modules/nixos/system/nvidia.nix
+    ../../modules/nixos/programs
   ];
 
   # Bootloader.
@@ -36,23 +37,6 @@
       # see https://github.com/NixOS/nixpkgs/issues/55807#issuecomment-463959647
       "dmask=007"
       "fmask=117"
-    ];
-  };
-
-  # Open ports in the firewall.
-  networking.firewall = {
-    enable = true;
-    allowedTCPPortRanges = [
-      {
-        from = 1714;
-        to = 1764;
-      } # KDE Connect
-    ];
-    allowedUDPPortRanges = [
-      {
-        from = 1714;
-        to = 1764;
-      } # KDE Connect
     ];
   };
 
@@ -117,14 +101,7 @@
       '';
     };
     firefox.enable = true;
-    # firewall is opened by default;
-    # see: https://github.com/NixOS/nixpkgs/blob/799ba5bffed04ced7067a91798353d360788b30d/nixos/modules/programs/localsend.nix#L17-L21
-    localsend.enable = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    vim
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
