@@ -129,6 +129,7 @@
           inherit system overlays;
           config.allowUnfreePredicate = pkg:
             builtins.elem (nixpkgs.lib.getName pkg) [
+              "clion"
               "davinci-resolve"
             ];
         };
@@ -157,6 +158,11 @@
         biome = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.biome
+          ];
+        };
+        cpp = pkgs.mkShell {
+          nativeBuildInputs = [
+            pkgs.jetbrains.clion
           ];
         };
         flatbuffers = pkgs.mkShell {
