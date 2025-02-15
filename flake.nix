@@ -80,7 +80,7 @@
             if useLanzaboote
             then [
               inputs.lanzaboote.nixosModules.lanzaboote
-              ./nix/modules/nixos/lanzaboote.nix
+              ./nix/modules/nixos/system/lanzaboote.nix
             ]
             else []
           )

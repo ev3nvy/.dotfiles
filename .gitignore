@@ -27,7 +27,8 @@
 !/nix/lib/*.nix
 !/nix/modules/
 !/nix/modules/nixos/
-!/nix/modules/nixos/*.nix
+!/nix/modules/nixos/**/
+!/nix/modules/nixos/**/*.nix
 !/nix/programs/
 !/nix/programs/*.nix
 !/nix/shared/
