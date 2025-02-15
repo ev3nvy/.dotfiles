@@ -22,27 +22,6 @@
   # https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
 
-  networking = {
-    interfaces."enp24s0" = {
-      name = "eth0";
-      useDHCP = false;
-      ipv4.addresses = [
-        {
-          address = "192.168.1.2";
-          prefixLength = 24;
-        }
-      ];
-    };
-
-    defaultGateway = "192.168.1.254";
-    nameservers = [
-      # respect router dns settings
-      "192.168.1.254"
-      # cloudflare dns as backup
-      "1.1.1.1"
-    ];
-  };
-
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
