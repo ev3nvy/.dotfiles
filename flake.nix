@@ -6,9 +6,11 @@
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pre-commit-hooks-nix.follows = "";
-      inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks-nix.follows = "";
+        rust-overlay.follows = "rust-overlay";
+      };
     };
 
     home-manager = {
@@ -22,14 +24,16 @@
     };
 
     alejandra = {
-      url = "github:kamadorueda/alejandra/3.0.0";
+      url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nil = {
       url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
     };
 
     rust-overlay = {
