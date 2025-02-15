@@ -48,19 +48,65 @@
     nixpkgs,
     ...
   } @ inputs: let
-    system = "x86_64-linux";
     supportedSystems = ["x86_64-linux"];
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
+    # https://github.com/redyf/nixdots/blob/72420a5d4ee128eea41cef0c385fb15a43be4077/flake.nix#L63-L116
+    createNixosConfiguration = {
+      system,
+      username,
+      homeDirectory,
+      hostname,
+      modules ? [],
+      useLanzaboote ? false,
+      includeHomeManager ? true,
+    }:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+          inherit username homeDirectory hostname;
+        };
+        modules =
+          [
+            ./nix/systems/${hostname}
+            {networking.hostName = hostname;}
+          ]
+          ++ (
+            if useLanzaboote
+            then [
+              inputs.lanzaboote.nixosModules.lanzaboote
+              ./nix/modules/nixos/lanzaboote.nix
+            ]
+            else []
+          )
+          ++ (
+            if includeHomeManager
+            then [
+              inputs.home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  # TODO: look into what these do
+                  # useUserPackages = true;
+                  # useGlobalPkgs = false;
+                  extraSpecialArgs = {inherit inputs username homeDirectory;};
+                  sharedModules = [inputs.nix-index-database.hmModules.nix-index];
+                  users."${username}" = import ./nix/systems/${hostname}/home.nix;
+                };
+              }
+            ]
+            else []
+          )
+          ++ modules;
+      };
   in {
     nixosConfigurations = {
-      ev3nvy-desktop = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs;};
-        modules = [
-          inputs.lanzaboote.nixosModules.lanzaboote
-          ./nix/systems/ev3nvy-desktop
-          inputs.home-manager.nixosModules.default
-        ];
+      ev3nvy-desktop = createNixosConfiguration {
+        system = "x86_64-linux";
+        username = "ev3nvy";
+        homeDirectory = "/home/ev3nvy";
+        hostname = "ev3nvy-desktop";
+        useLanzaboote = true;
       };
     };
 

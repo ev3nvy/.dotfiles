@@ -4,22 +4,19 @@
 {
   lib,
   pkgs,
-  inputs,
+  username,
   ...
 }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../shared/host.nix
-    ../../modules/nixos/lanzaboote.nix
     ../../modules/nixos/nvidia.nix
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "ev3nvy-desktop"; # Define your hostname.
 
   # Open ports in the firewall.
   networking.firewall = {
@@ -79,18 +76,10 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ev3nvy = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "ev3nvy";
+    description = username;
     extraGroups = ["networkmanager" "wheel"];
-  };
-
-  home-manager = {
-    extraSpecialArgs = {inherit inputs;};
-    sharedModules = [inputs.nix-index-database.hmModules.nix-index];
-    users = {
-      "ev3nvy" = import ./home.nix;
-    };
   };
 
   services.pcscd.enable = true;
