@@ -91,6 +91,7 @@
     };
     gpg.enable = true;
     mpv.enable = true;
+    nix-index.enable = true;
     home-manager.enable = true;
   };
 }

@@ -87,6 +87,7 @@
 
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
+    sharedModules = [inputs.nix-index-database.hmModules.nix-index];
     users = {
       "ev3nvy" = import ./home.nix;
     };
