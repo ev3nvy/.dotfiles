@@ -1,16 +1,20 @@
 {
+  metadata,
+  namespace,
+  ...
+}: {
   config,
   lib,
   pkgs,
   ...
 }: let
-  inherit (config.customModule) metadata;
+  cfg = config.${namespace}.system.shell;
 in {
   options = {
-    shell.enable = lib.mkEnableOption "Enable shell module.";
+    ${namespace}.system.shell.enable = lib.mkEnableOption "shell module";
   };
 
-  config = lib.mkIf config.shell.enable {
+  config = lib.mkIf cfg.enable {
     programs = {
       fish.enable = true;
 
@@ -24,8 +28,8 @@ in {
       '';
     };
 
-    home-manager.users.${metadata.homeManagerUsername} = {
-      programs.fish = {
+    home-manager = lib.mkIf metadata.homeManager.enabled {
+      users.${metadata.homeManager.username}.programs.fish = {
         enable = true;
         interactiveShellInit = ''
           set fish_greeting # Disable greeting

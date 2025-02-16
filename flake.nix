@@ -62,6 +62,7 @@
       homeDirectory,
       hostname,
       modules ? [],
+      modulesNamespace ? "customModule",
       useLanzaboote ? false,
       includeHomeManager ? true,
     }:
@@ -69,15 +70,17 @@
         inherit system;
         specialArgs = {
           inherit inputs;
-          inherit username homeDirectory hostname;
+          inherit username homeDirectory hostname modulesNamespace;
         };
         modules =
           [
             ./nix/systems/${hostname}
             {
               networking.hostName = hostname;
+
+              ${modulesNamespace}.metadata.homeManager.enabled = includeHomeManager;
             }
-            ./nix/modules/nixos/metadata.nix
+            (import ./nix/modules/nixos {inherit modulesNamespace;})
           ]
           ++ (
             if useLanzaboote
@@ -92,7 +95,7 @@
             then [
               inputs.home-manager.nixosModules.home-manager
               {
-                customModule.metadata.homeManagerUsername = username;
+                ${modulesNamespace}.metadata.homeManager.username = username;
 
                 home-manager = {
                   # TODO: look into what these do

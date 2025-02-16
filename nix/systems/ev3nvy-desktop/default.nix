@@ -1,12 +1,14 @@
-{username, ...}: {
+{
+  username,
+  modulesNamespace,
+  ...
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./extra
     ../../shared/host.nix
     ../../modules/nixos/system/nvidia.nix
-    ../../modules/nixos/system
-    ../../modules/nixos/programs
   ];
 
   # Bootloader.
@@ -49,9 +51,8 @@
 
   services.pcscd.enable = true;
 
-  customModule = {
-    system.enable = true;
-  };
+  ${modulesNamespace} = {system.enable = true;};
+
   programs = {
     firefox.enable = true;
   };

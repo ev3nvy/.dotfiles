@@ -1,17 +1,26 @@
 {
-  lib,
-  config,
+  metadata,
+  namespace,
   ...
-}: {
-  imports = [
-    ./shell.nix
-  ];
+}: let
+  args = {inherit metadata namespace;};
+in
+  {
+    config,
+    lib,
+    ...
+  }: let
+    cfg = config.${namespace}.system;
+  in {
+    imports = [
+      (import ./shell.nix args)
+    ];
 
-  options = {
-    customModule.system.enable = lib.mkEnableOption "Enable system module";
-  };
+    options = {
+      ${namespace}.system.enable = lib.mkEnableOption "system module";
+    };
 
-  config = lib.mkIf config.customModule.system.enable {
-    shell.enable = lib.mkDefault true;
-  };
-}
+    config.${namespace}.system = lib.mkIf cfg.enable {
+      shell.enable = lib.mkDefault true;
+    };
+  }
