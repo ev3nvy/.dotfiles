@@ -13,6 +13,7 @@ in
     cfg = config.${namespace}.system;
   in {
     imports = [
+      (import ./audio.nix args)
       (import ./shell.nix args)
     ];
 
@@ -21,6 +22,7 @@ in
     };
 
     config.${namespace}.system = lib.mkIf cfg.enable {
+      audio.enable = lib.mkDefault true;
       shell.enable = lib.mkDefault true;
     };
   }
