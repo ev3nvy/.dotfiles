@@ -200,7 +200,7 @@
         default = pkgs.mkShell {
           buildInputs =
             [
-              (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --flake .")
+              (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --show-trace --flake .")
               (pkgs.writeShellScriptBin "nixos_upgrade" "nix flake update")
               (pkgs.writeShellScriptBin "nixos_upgrade_switch" "nixos-rebuild switch --recreate-lock-file --flake .")
               (pkgs.writeShellScriptBin "nixos_clean" "nix-collect-garbage --delete-old")
