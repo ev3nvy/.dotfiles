@@ -14,6 +14,7 @@ in
   in {
     imports = [
       (import ./audio.nix args)
+      (import ./locale.nix args)
       (import ./shell.nix args)
     ];
 
@@ -23,6 +24,7 @@ in
 
     config.${namespace}.system = lib.mkIf cfg.enable {
       audio.enable = lib.mkDefault true;
+      locale.enable = lib.mkDefault true;
       shell.enable = lib.mkDefault true;
     };
   }
