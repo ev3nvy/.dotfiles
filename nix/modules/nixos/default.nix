@@ -29,6 +29,7 @@
       namespace = modulesNamespace;
     };
   in [
+    (import ./cli args)
     (import ./programs args)
     (import ./system args)
   ];

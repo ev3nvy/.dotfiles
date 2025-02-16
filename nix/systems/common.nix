@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {
   imports = [
     ../programs/git.nix
     ../programs/vscodium.nix
@@ -20,8 +20,4 @@
       toml.enable = true;
     };
   };
-
-  home.packages = with pkgs; [
-    jq
-  ];
 }

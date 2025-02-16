@@ -41,7 +41,10 @@
 
   services.pcscd.enable = true;
 
-  ${modulesNamespace} = {system.enable = true;};
+  ${modulesNamespace} = {
+    cli.enable = true;
+    system.enable = true;
+  };
 
   programs = {
     firefox.enable = true;
