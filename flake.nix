@@ -276,5 +276,7 @@
         };
       }
     );
+
+    formatter = nixpkgs.lib.genAttrs supportedSystems (system: inputs.alejandra.defaultPackage.${system});
   };
 }
