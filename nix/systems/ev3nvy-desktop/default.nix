@@ -44,6 +44,7 @@
   ${modulesNamespace} = {
     cli.enable = true;
     system.enable = true;
+    tools.enable = true;
   };
 
   programs = {

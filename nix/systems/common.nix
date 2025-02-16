@@ -1,6 +1,5 @@
 _: {
   imports = [
-    ../programs/git.nix
     ../programs/vscodium.nix
   ];
 
