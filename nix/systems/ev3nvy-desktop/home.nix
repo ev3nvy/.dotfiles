@@ -24,10 +24,11 @@
   };
 
   home.packages = with pkgs; [
-    (discord.override {
-      withOpenASAR = true;
-      withVencord = true;
-    })
+    discord
+    # (discord.override {
+    #   withOpenASAR = true;
+    #   withVencord = true;
+    # })
     gh
     keepassxc
     inputs.alejandra.defaultPackage.${pkgs.system}
