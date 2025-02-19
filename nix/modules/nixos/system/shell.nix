@@ -18,7 +18,7 @@ in {
     programs = {
       fish.enable = true;
 
-      # https://nixos.wiki/wiki/Fish
+      # https://nixos.wiki/wiki/Fish#Setting_fish_as_your_shell
       bash.interactiveShellInit = ''
         if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
         then
