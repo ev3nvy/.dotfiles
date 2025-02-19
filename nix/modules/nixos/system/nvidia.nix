@@ -7,6 +7,12 @@
 
   services.xserver.videoDrivers = ["nvidia"];
 
+  # fix black screen after wake from sleep;
+  # see: https://www.reddit.com/r/NixOS/comments/1d4l6ak/comment/l6squa1/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+  boot.kernelParams = [
+    "nvidia-drm.fbdev=1"
+  ];
+
   hardware.nvidia = {
     # Modesetting is required.
     modesetting.enable = true;
