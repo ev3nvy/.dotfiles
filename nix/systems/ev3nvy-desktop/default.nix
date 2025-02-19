@@ -29,6 +29,8 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  hardware.bluetooth.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
