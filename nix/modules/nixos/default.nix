@@ -31,6 +31,7 @@
   in [
     (import ./cli args)
     (import ./programs args)
+    (import ./services args)
     (import ./system args)
     (import ./tools args)
   ];
