@@ -7,12 +7,6 @@
 
   services.xserver.videoDrivers = ["nvidia"];
 
-  # fix black screen after wake from sleep;
-  # see: https://www.reddit.com/r/NixOS/comments/1d4l6ak/comment/l6squa1/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-  boot.kernelParams = [
-    "nvidia-drm.fbdev=1"
-  ];
-
   hardware.nvidia = {
     # Modesetting is required.
     modesetting.enable = true;
@@ -42,6 +36,14 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  # wake from sleep fix
+  # https://discourse.nixos.org/t/black-screen-after-suspend-hibernate-with-nvidia/54341/6
+  systemd.services."systemd-suspend" = {
+    serviceConfig = {
+      Environment = ''"SYSTEMD_SLEEP_FREEZE_USER_SESSIONS=false"'';
+    };
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
