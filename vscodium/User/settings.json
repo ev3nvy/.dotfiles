@@ -26,21 +26,21 @@
             "menubar.selectionForeground": "#7CB342",
             "editor.findMatchBorder": "#7CB342",
             "selection.background": "#7CB34240",
-            "statusBarItem.remoteBackground": "#7CB342",
+            "statusBarItem.remoteBackground": "#7CB342"
         },
         "editorBracketHighlight.foreground1": "#69B00B",
         "editorBracketHighlight.foreground2": "#00A0A0",
         "editorBracketHighlight.foreground3": "#C0C000",
         "editorBracketHighlight.foreground4": "#ff5050",
         "editorBracketHighlight.foreground5": "#ffa200",
-        "editorBracketHighlight.foreground6": "#B00B69",
+        "editorBracketHighlight.foreground6": "#B00B69"
     },
     "materialTheme.accent": "Lime",
     "material-icon-theme.files.color": "#7CB342",
     "material-icon-theme.folders.theme": "classic",
     "material-icon-theme.files.associations": {
         "justfile": "makefile",
-        "biome.jsonc": "biome",
+        "biome.jsonc": "biome"
         // "README.*.md": "readme", // blocked by: https://github.com/Microsoft/vscode/issues/12493
     },
 
@@ -66,7 +66,7 @@
         "justfile": "makefile",
         ".clang{d,-format,-tidy}": "yaml",
         ".env": "dotenv",
-        "*.h": "c",
+        "*.h": "c"
     },
     "files.eol": "\n",
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
@@ -76,60 +76,60 @@
     "[c]": {
         "editor.defaultFormatter": "xaver.clang-format",
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[cpp]": {
         "editor.defaultFormatter": "xaver.clang-format",
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[javascript]": {
         "editor.defaultFormatter": "biomejs.biome",
         "editor.codeActionsOnSave": {
-            "source.organizeImports.biome": "explicit",
+            "source.organizeImports.biome": "explicit"
         },
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[json]": {
         "editor.defaultFormatter": "biomejs.biome",
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[jsonc]": {
         "editor.defaultFormatter": "biomejs.biome",
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[makefile]": {
         "editor.insertSpaces": false,
-        "editor.tabSize": 2,
+        "editor.tabSize": 2
     },
     "[markdown]": {
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
-        "editor.wordWrap": "off",
+        "editor.wordWrap": "off"
     },
     "[nix]": {
         "editor.defaultFormatter": "kamadorueda.alejandra",
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": true
     },
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[rust]": {
         "editor.formatOnSave": true,
-        "editor.tabSize": 4,
+        "editor.tabSize": 4
     },
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml",
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": true
     },
     "[typescript]": {
         "editor.defaultFormatter": "biomejs.biome",
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": true
     },
 
     // plugin specific settings
@@ -141,7 +141,7 @@
     "excalidraw.image": {
         "exportScale": 1,
         "exportWithBackground": false,
-        "exportWithDarkMode": true,
+        "exportWithDarkMode": true
     },
-    "nix.enableLanguageServer": true,
+    "nix.enableLanguageServer": true
 }

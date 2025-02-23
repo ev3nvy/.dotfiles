@@ -31,7 +31,11 @@
         {
             // https://code.visualstudio.com/docs/languages/json#_json-with-comments
             // "The mode also accepts trailing commas, but they are discouraged and the editor will display a warning."
-            "include": ["biome.jsonc"],
+            "include": [
+                "biome.jsonc",
+                "vscodium/User/keybindings.json",
+                "vscodium/User/settings.json"
+            ],
             "json": {
                 "formatter": {
                     "trailingCommas": "none"
