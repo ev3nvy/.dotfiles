@@ -92,6 +92,16 @@ in {
                 markdown = lib.importJSON ../../../../vscodium/User/profiles/notes/snippets/markdown.json;
               };
             };
+            web = {
+              userSettings =
+                commonUserSettings
+                // (jsonc.fromJSONCWithTrailingCommas
+                  (builtins.readFile (profileUserSettingsPath "web")))
+                .settings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "web");
+            };
           };
         };
       })
