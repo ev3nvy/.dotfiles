@@ -105,10 +105,6 @@
         "editor.insertSpaces": false,
         "editor.tabSize": 2
     },
-    "[nix]": {
-        "editor.defaultFormatter": "kamadorueda.alejandra",
-        "editor.formatOnSave": true
-    },
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
@@ -131,6 +127,5 @@
     "biome.enabled": true,
     "clangd.arguments": ["--log=verbose"],
     "eslint.useFlatConfig": true,
-    "eslint.format.enable": true,
-    "nix.enableLanguageServer": true
+    "eslint.format.enable": true
 }

@@ -68,6 +68,16 @@ in {
                 shellscript = lib.importJSON ../../../../vscodium/User/profiles/bash/snippets/shellscript.json;
               };
             };
+            nix = {
+              userSettings =
+                commonUserSettings
+                // (jsonc.fromJSONCWithTrailingCommas
+                  (builtins.readFile (profileUserSettingsPath "nix")))
+                .settings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "nix");
+            };
             notes = {
               userSettings =
                 commonUserSettings
