@@ -78,6 +78,12 @@ in {
 
               extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "c-clang");
             };
+            flatbuffers = {
+              userSettings = commonUserSettings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "flatbuffers");
+            };
             nix = {
               userSettings =
                 commonUserSettings
