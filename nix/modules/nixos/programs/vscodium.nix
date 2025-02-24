@@ -68,6 +68,16 @@ in {
                 shellscript = lib.importJSON ../../../../vscodium/User/profiles/bash/snippets/shellscript.json;
               };
             };
+            c-clang = {
+              userSettings =
+                commonUserSettings
+                // (jsonc.fromJSONCWithTrailingCommas
+                  (builtins.readFile (profileUserSettingsPath "c-clang")))
+                .settings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "c-clang");
+            };
             nix = {
               userSettings =
                 commonUserSettings

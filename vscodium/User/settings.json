@@ -69,25 +69,5 @@
         "*.h": "c"
     },
     "files.eol": "\n",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt",
-    "update.mode": "none",
-
-    // language-specific overrides
-    "[c]": {
-        "editor.defaultFormatter": "xaver.clang-format",
-        "editor.formatOnSave": true,
-        "editor.tabSize": 4
-    },
-    "[cpp]": {
-        "editor.defaultFormatter": "xaver.clang-format",
-        "editor.formatOnSave": true,
-        "editor.tabSize": 4
-    },
-    "[makefile]": {
-        "editor.insertSpaces": false,
-        "editor.tabSize": 2
-    },
-
-    // plugin specific settings
-    "clangd.arguments": ["--log=verbose"]
+    "terminal.integrated.defaultProfile.windows": "Command Prompt"
 }
