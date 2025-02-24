@@ -7,7 +7,7 @@
 }: let
   cfg = config.programs.vscodium;
 
-  jsonc = import ../lib/jsonc-with-trailing-commas.nix {inherit lib;};
+  jsonc = import ../../../lib/jsonc-with-trailing-commas.nix {inherit lib;};
 
   extensionsNix = inputs.nix-vscode-extensions.extensions.${pkgs.system};
 
@@ -92,15 +92,15 @@ in {
         enable = true;
         package = pkgs.vscodium;
 
-        userSettings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../vscodium/User/settings.json);
-        keybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../vscodium/User/keybindings.json);
+        userSettings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../../../vscodium/User/settings.json);
+        keybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../../../vscodium/User/keybindings.json);
 
         # TODO: parse extensions from recommendations: grep -o '^[^/]*' .vscode/extensions.json | jq '.recommendations'
         extensions = generalExtensions;
 
         languageSnippets = {
-          markdown = lib.importJSON ../../vscodium/User/snippets/markdown.json;
-          shellscript = lib.importJSON ../../vscodium/User/snippets/shellscript.json;
+          # markdown = lib.importJSON ../../../../vscodium/User/snippets/markdown.json;
+          # shellscript = lib.importJSON ../../../../vscodium/User/snippets/shellscript.json;
         };
       }
       (lib.mkIf cfg.extensions.bash.enable {

@@ -1,6 +1,6 @@
 _: {
   imports = [
-    ../programs/vscodium.nix
+    ../modules/nixos/programs/vscodium.nix
   ];
 
   programs.vscodium = {
