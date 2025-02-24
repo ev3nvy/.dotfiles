@@ -92,6 +92,16 @@ in {
                 markdown = lib.importJSON ../../../../vscodium/User/profiles/notes/snippets/markdown.json;
               };
             };
+            rust = {
+              userSettings =
+                commonUserSettings
+                // (jsonc.fromJSONCWithTrailingCommas
+                  (builtins.readFile (profileUserSettingsPath "rust")))
+                .settings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "rust");
+            };
             web = {
               userSettings =
                 commonUserSettings

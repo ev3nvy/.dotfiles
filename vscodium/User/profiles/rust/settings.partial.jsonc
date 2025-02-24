@@ -1,0 +1,13 @@
+{
+    "$schema": "../../../../scripts/schemas/settings-partial/0.1.0/schema.json",
+    "settings": {
+        "[rust]": {
+            "editor.formatOnSave": true,
+            "editor.tabSize": 4
+        },
+        "[toml]": {
+            "editor.defaultFormatter": "tamasfe.even-better-toml",
+            "editor.formatOnSave": true
+        }
+    }
+}
