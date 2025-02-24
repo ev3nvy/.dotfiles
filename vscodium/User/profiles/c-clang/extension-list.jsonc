@@ -1,0 +1,8 @@
+{
+    "$schema": "../../../../scripts/schemas/extension-list/0.1.0/schema.json",
+    "extensions": [
+        "llvm-vs-code-extensions.vscode-clangd",
+        "notskm.clang-tidy",
+        "xaver.clang-format"
+    ]
+}

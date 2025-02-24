@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Partial keybindings list",
+    "description": "List of keybindings to be added for the given VSCode profile.",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "description": "A field for the [JSON schema](https://json-schema.org/) specification",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "keybindings": {
+            "description": "VSCode keybindings.",
+            "$ref": "vscode://schemas/keybindings/user"
+        }
+    },
+    "required": ["$schema", "keybindings"]
+}
