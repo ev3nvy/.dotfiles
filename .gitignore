@@ -41,6 +41,12 @@
 !/nix/systems/**/hardware-configuration.nix
 !/nix/systems/**/home.nix
 
+!/scripts/
+!/scripts/schemas/
+!/scripts/schemas/*/
+!/scripts/schemas/*/*.*.*/
+!/scripts/schemas/*/*.*.*/schema.json
+
 !/vscodium/
 !/vscodium/User/
 !/vscodium/User/snippets/
