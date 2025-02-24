@@ -49,6 +49,13 @@
 
 !/vscodium/
 !/vscodium/User/
+!/vscodium/User/profiles/
+!/vscodium/User/profiles/*
+!/vscodium/User/profiles/*/snippets/
+!/vscodium/User/profiles/*/snippets/*.json
+!/vscodium/User/profiles/*/extension-list.jsonc
+!/vscodium/User/profiles/*/keybindings.partial.jsonc
+!/vscodium/User/profiles/*/settings.partial.jsonc
 !/vscodium/User/snippets/
 !/vscodium/User/snippets/*.json
 !/vscodium/User/extension-list.jsonc

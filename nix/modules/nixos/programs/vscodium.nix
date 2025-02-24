@@ -26,15 +26,20 @@ in {
     commonKeybindingsPath = ../../../../vscodium/User/keybindings.json;
     commonExtensionsPath = ../../../../vscodium/User/extension-list.jsonc;
 
+    profileUserSettingsPath = name: ../../../../vscodium/User/profiles/${name}/settings.partial.jsonc;
+    profileExtensionsPath = name: ../../../../vscodium/User/profiles/${name}/extension-list.jsonc;
+
+    parseExtensionList = path: let
+      extensionListJson = jsonc.fromJSONC (builtins.readFile path);
+      extensionStringList = extensionListJson.extensions;
+      mapStringListToAttrs =
+        builtins.map (x: lib.attrsets.getAttrFromPath (lib.strings.splitString "." x) extensionsNix.open-vsx);
+    in
+      mapStringListToAttrs extensionStringList;
+
     commonUserSettings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile commonUserSettingsPath);
     commonKeybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile commonKeybindingsPath);
-    commonExtensions =
-      builtins.map
-      (x:
-        lib.attrsets.getAttrFromPath
-        (lib.strings.splitString "." x)
-        extensionsNix.open-vsx)
-      (jsonc.fromJSONC (builtins.readFile commonExtensionsPath)).extensions;
+    commonExtensions = parseExtensionList commonExtensionsPath;
   in
     # TODO: investigate if we can read the `.dotfiles/vscodium/User/profiles` dir and do all of
     #       this automagically
@@ -52,6 +57,20 @@ in {
 
               enableUpdateCheck = false;
               enableExtensionUpdateCheck = false;
+            };
+            notes = {
+              userSettings =
+                commonUserSettings
+                // (jsonc.fromJSONCWithTrailingCommas
+                  (builtins.readFile (profileUserSettingsPath "notes")))
+                .settings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "notes");
+
+              languageSnippets = {
+                markdown = lib.importJSON ../../../../vscodium/User/profiles/notes/snippets/markdown.json;
+              };
             };
           };
         };
