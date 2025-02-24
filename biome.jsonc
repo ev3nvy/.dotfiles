@@ -5,8 +5,6 @@
             ".vscode/extensions.json",
             "biome.jsonc",
             "scripts/schemas/*/*.*.*/schema.json",
-            // snippets are detected as their own file type in vscode so biome refuses to format them
-            // "vscodium/User/snippets/*.json",
             "vscodium/User/extension-list.jsonc",
             "vscodium/User/keybindings.json",
             "vscodium/User/settings.json",

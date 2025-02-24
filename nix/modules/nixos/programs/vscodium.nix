@@ -58,6 +58,16 @@ in {
               enableUpdateCheck = false;
               enableExtensionUpdateCheck = false;
             };
+            bash = {
+              userSettings = commonUserSettings;
+              keybindings = commonKeybindings;
+
+              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "bash");
+
+              languageSnippets = {
+                shellscript = lib.importJSON ../../../../vscodium/User/profiles/bash/snippets/shellscript.json;
+              };
+            };
             notes = {
               userSettings =
                 commonUserSettings
