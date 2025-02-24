@@ -6,7 +6,6 @@
   ...
 }: {
   imports = [
-    ../common.nix
     ../../programs/unfree.nix
   ];
 
