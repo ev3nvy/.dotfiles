@@ -1,0 +1,10 @@
+{
+    "$schema": "../../../../scripts/schemas/settings-partial/0.1.0/schema.json",
+    "settings": {
+        "[python]": {
+            "editor.defaultFormatter": "charliermarsh.ruff",
+            "editor.formatOnSave": true,
+            "editor.tabSize": 4
+        }
+    }
+}

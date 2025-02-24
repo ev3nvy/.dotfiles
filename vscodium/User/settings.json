@@ -87,11 +87,6 @@
         "editor.insertSpaces": false,
         "editor.tabSize": 2
     },
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.formatOnSave": true,
-        "editor.tabSize": 4
-    },
 
     // plugin specific settings
     "clangd.arguments": ["--log=verbose"]
