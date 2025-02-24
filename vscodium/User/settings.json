@@ -105,11 +105,6 @@
         "editor.insertSpaces": false,
         "editor.tabSize": 2
     },
-    "[markdown]": {
-        "editor.formatOnSave": true,
-        "editor.tabSize": 4,
-        "editor.wordWrap": "off"
-    },
     "[nix]": {
         "editor.defaultFormatter": "kamadorueda.alejandra",
         "editor.formatOnSave": true
@@ -137,11 +132,5 @@
     "clangd.arguments": ["--log=verbose"],
     "eslint.useFlatConfig": true,
     "eslint.format.enable": true,
-    "excalidraw.theme": "dark",
-    "excalidraw.image": {
-        "exportScale": 1,
-        "exportWithBackground": false,
-        "exportWithDarkMode": true
-    },
     "nix.enableLanguageServer": true
 }

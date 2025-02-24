@@ -1,6 +1,5 @@
 {
     "Insert collapsible": {
-        "prefix": "collapsible",
         "body": [
             "<details>",
             "  <summary>$1</summary>",
@@ -8,6 +7,7 @@
             "  $0",
             "</details>"
         ],
-        "description": "Insert collapsible element"
+        "description": "Insert collapsible element",
+        "prefix": "collapsible"
     }
 }
