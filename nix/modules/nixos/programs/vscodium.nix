@@ -22,12 +22,10 @@ in {
 
     extensionsNix = inputs.nix-vscode-extensions.extensions.${pkgs.system};
 
-    commonUserSettingsPath = ../../../../vscodium/User/settings.json;
-    commonKeybindingsPath = ../../../../vscodium/User/keybindings.json;
-    commonExtensionsPath = ../../../../vscodium/User/extension-list.jsonc;
-
-    profileUserSettingsPath = name: ../../../../vscodium/User/profiles/${name}/settings.partial.jsonc;
-    profileExtensionsPath = name: ../../../../vscodium/User/profiles/${name}/extension-list.jsonc;
+    userPath = ../../../../vscodium/User;
+    commonUserSettingsPath = "${userPath}/settings.json";
+    commonKeybindingsPath = "${userPath}/keybindings.json";
+    commonExtensionsPath = "${userPath}/extension-list.jsonc";
 
     parseExtensionList = path: let
       extensionListJson = jsonc.fromJSONC (builtins.readFile path);
@@ -41,104 +39,72 @@ in {
     commonKeybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile commonKeybindingsPath);
     commonExtensions = parseExtensionList commonExtensionsPath;
   in
-    # TODO: investigate if we can read the `.dotfiles/vscodium/User/profiles` dir and do all of
-    #       this automagically
     lib.mkIf cfg.enable (lib.mkMerge [
       (lib.mkIf hmEnabled {
         home-manager.users.${metadata.homeManager.username}.programs.vscode = {
           enable = true;
           package = pkgs.vscodium;
 
-          profiles = {
-            default = {
-              userSettings = commonUserSettings;
-              keybindings = commonKeybindings;
-              extensions = commonExtensions;
+          profiles = let
+            profilesFolder = "${userPath}/profiles";
 
-              enableUpdateCheck = false;
-              enableExtensionUpdateCheck = false;
-            };
-            bash = {
-              userSettings = commonUserSettings;
-              keybindings = commonKeybindings;
+            profileList = folder: let
+              folderItems = folder: builtins.readDir folder;
 
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "bash");
+              # NOTE: this ignores symlinks
+              filterFiles = folder: lib.filterAttrs (name: value: value == "regular") (folderItems folder);
+              filterFolders = folder: lib.filterAttrs (name: value: value == "directory") (folderItems folder);
 
-              languageSnippets = {
-                shellscript = lib.importJSON ../../../../vscodium/User/profiles/bash/snippets/shellscript.json;
+              profileUserSettingsPath = folder: name: "${folder}/${name}/settings.partial.jsonc";
+              profileKeybindingsPath = folder: name: "${folder}/${name}/keybindings.partial.jsonc";
+              profileExtensionsPath = folder: name: "${folder}/${name}/extension-list.jsonc";
+              profileLanguageSnippetsPath = folder: name: "${folder}/${name}/snippets";
+
+              parseCustomUserSettings = path: (jsonc.fromJSONC (builtins.readFile path)).settings;
+              parseCustomKeybindings = path: (jsonc.fromJSONC (builtins.readFile path)).keybindings;
+              parseLanguageSnippets = path: lib.mapAttrs (name: value: lib.importJSON "${path}/${name}") (filterFiles path);
+
+              customUserSettings = folder: name: let
+                path = profileUserSettingsPath folder name;
+              in
+                lib.optionalAttrs (builtins.pathExists path) (parseCustomUserSettings path);
+              customKeybindings = folder: name: let
+                path = profileKeybindingsPath folder name;
+              in
+                lib.optionals (builtins.pathExists path) (parseCustomKeybindings path);
+              customExtensions = folder: name: let
+                path = profileExtensionsPath folder name;
+              in
+                lib.optionals (builtins.pathExists path) (parseExtensionList path);
+              customLanguageSnippets = folder: name: let
+                path = profileLanguageSnippetsPath folder name;
+              in
+                lib.optionalAttrs (builtins.pathExists path) (parseLanguageSnippets path);
+
+              profileList = folder:
+                lib.mapAttrs (name: value: {
+                  userSettings = commonUserSettings // customUserSettings folder name;
+                  keybindings = commonKeybindings ++ customKeybindings folder name;
+
+                  extensions = commonExtensions ++ customExtensions folder name;
+
+                  languageSnippets = customLanguageSnippets folder name;
+                }) (filterFolders folder);
+            in
+              profileList folder;
+          in
+            {
+              default = {
+                userSettings = commonUserSettings;
+                keybindings = commonKeybindings;
+
+                extensions = commonExtensions;
+
+                enableUpdateCheck = false;
+                enableExtensionUpdateCheck = false;
               };
-            };
-            c-clang = {
-              userSettings =
-                commonUserSettings
-                // (jsonc.fromJSONCWithTrailingCommas
-                  (builtins.readFile (profileUserSettingsPath "c-clang")))
-                .settings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "c-clang");
-            };
-            flatbuffers = {
-              userSettings = commonUserSettings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "flatbuffers");
-            };
-            nix = {
-              userSettings =
-                commonUserSettings
-                // (jsonc.fromJSONCWithTrailingCommas
-                  (builtins.readFile (profileUserSettingsPath "nix")))
-                .settings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "nix");
-            };
-            notes = {
-              userSettings =
-                commonUserSettings
-                // (jsonc.fromJSONCWithTrailingCommas
-                  (builtins.readFile (profileUserSettingsPath "notes")))
-                .settings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "notes");
-
-              languageSnippets = {
-                markdown = lib.importJSON ../../../../vscodium/User/profiles/notes/snippets/markdown.json;
-              };
-            };
-            python = {
-              userSettings =
-                commonUserSettings
-                // (jsonc.fromJSONCWithTrailingCommas
-                  (builtins.readFile (profileUserSettingsPath "python")))
-                .settings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "python");
-            };
-            rust = {
-              userSettings =
-                commonUserSettings
-                // (jsonc.fromJSONCWithTrailingCommas
-                  (builtins.readFile (profileUserSettingsPath "rust")))
-                .settings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "rust");
-            };
-            web = {
-              userSettings =
-                commonUserSettings
-                // (jsonc.fromJSONCWithTrailingCommas
-                  (builtins.readFile (profileUserSettingsPath "web")))
-                .settings;
-              keybindings = commonKeybindings;
-
-              extensions = commonExtensions ++ parseExtensionList (profileExtensionsPath "web");
-            };
-          };
+            }
+            // (profileList profilesFolder);
         };
       })
       # TODO: improve this
