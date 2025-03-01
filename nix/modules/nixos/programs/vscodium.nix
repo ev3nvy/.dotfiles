@@ -41,70 +41,81 @@ in {
   in
     lib.mkIf cfg.enable (lib.mkMerge [
       (lib.mkIf hmEnabled {
-        home-manager.users.${metadata.homeManager.username}.programs.vscode = {
-          enable = true;
-          package = pkgs.vscodium;
+        home-manager.users.${metadata.homeManager.username} = {config, ...}: {
+          home.file = let
+            userPath = "${metadata.homeManager.dotfiles}/vscodium/User";
+            commonUserSettingsPath = "${userPath}/settings.json";
+            commonKeybindingsPath = "${userPath}/keybindings.json";
+          in {
+            # make only these two files writable*, snippets could also make sense if I didn't use
+            # profiles
+            #
+            # * well technically I could put settings.json, keybindings.json and snippets for each
+            #   profile out of store (if that is even possible), so I could change settings without
+            #   rebuilding, but I am happy with this for now
+            ".config/VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink commonUserSettingsPath;
+            ".config/VSCodium/User/keybindings.json".source = config.lib.file.mkOutOfStoreSymlink commonKeybindingsPath;
+          };
 
-          profiles = let
-            profilesFolder = "${userPath}/profiles";
+          programs.vscode = {
+            enable = true;
+            package = pkgs.vscodium;
 
-            profileList = folder: let
-              folderItems = folder: builtins.readDir folder;
+            profiles = let
+              profilesFolder = "${userPath}/profiles";
 
-              # NOTE: this ignores symlinks
-              filterFiles = folder: lib.filterAttrs (name: value: value == "regular") (folderItems folder);
-              filterFolders = folder: lib.filterAttrs (name: value: value == "directory") (folderItems folder);
+              profileList = folder: let
+                folderItems = folder: builtins.readDir folder;
 
-              profileUserSettingsPath = folder: name: "${folder}/${name}/settings.partial.jsonc";
-              profileKeybindingsPath = folder: name: "${folder}/${name}/keybindings.partial.jsonc";
-              profileExtensionsPath = folder: name: "${folder}/${name}/extension-list.jsonc";
-              profileLanguageSnippetsPath = folder: name: "${folder}/${name}/snippets";
+                # NOTE: this ignores symlinks
+                filterFiles = folder: lib.filterAttrs (name: value: value == "regular") (folderItems folder);
+                filterFolders = folder: lib.filterAttrs (name: value: value == "directory") (folderItems folder);
 
-              parseCustomUserSettings = path: (jsonc.fromJSONC (builtins.readFile path)).settings;
-              parseCustomKeybindings = path: (jsonc.fromJSONC (builtins.readFile path)).keybindings;
-              parseLanguageSnippets = path: lib.mapAttrs (name: value: lib.importJSON "${path}/${name}") (filterFiles path);
+                profileUserSettingsPath = folder: name: "${folder}/${name}/settings.partial.jsonc";
+                profileKeybindingsPath = folder: name: "${folder}/${name}/keybindings.partial.jsonc";
+                profileExtensionsPath = folder: name: "${folder}/${name}/extension-list.jsonc";
+                profileLanguageSnippetsPath = folder: name: "${folder}/${name}/snippets";
 
-              customUserSettings = folder: name: let
-                path = profileUserSettingsPath folder name;
+                parseCustomUserSettings = path: (jsonc.fromJSONC (builtins.readFile path)).settings;
+                parseCustomKeybindings = path: (jsonc.fromJSONC (builtins.readFile path)).keybindings;
+                parseLanguageSnippets = path: lib.mapAttrs (name: value: lib.importJSON "${path}/${name}") (filterFiles path);
+
+                customUserSettings = folder: name: let
+                  path = profileUserSettingsPath folder name;
+                in
+                  lib.optionalAttrs (builtins.pathExists path) (parseCustomUserSettings path);
+                customKeybindings = folder: name: let
+                  path = profileKeybindingsPath folder name;
+                in
+                  lib.optionals (builtins.pathExists path) (parseCustomKeybindings path);
+                customExtensions = folder: name: let
+                  path = profileExtensionsPath folder name;
+                in
+                  lib.optionals (builtins.pathExists path) (parseExtensionList path);
+                customLanguageSnippets = folder: name: let
+                  path = profileLanguageSnippetsPath folder name;
+                in
+                  lib.optionalAttrs (builtins.pathExists path) (parseLanguageSnippets path);
+
+                profileList = folder:
+                  lib.mapAttrs (name: value: {
+                    userSettings = commonUserSettings // customUserSettings folder name;
+                    keybindings = commonKeybindings ++ customKeybindings folder name;
+
+                    extensions = commonExtensions ++ customExtensions folder name;
+
+                    languageSnippets = customLanguageSnippets folder name;
+                  }) (filterFolders folder);
               in
-                lib.optionalAttrs (builtins.pathExists path) (parseCustomUserSettings path);
-              customKeybindings = folder: name: let
-                path = profileKeybindingsPath folder name;
-              in
-                lib.optionals (builtins.pathExists path) (parseCustomKeybindings path);
-              customExtensions = folder: name: let
-                path = profileExtensionsPath folder name;
-              in
-                lib.optionals (builtins.pathExists path) (parseExtensionList path);
-              customLanguageSnippets = folder: name: let
-                path = profileLanguageSnippetsPath folder name;
-              in
-                lib.optionalAttrs (builtins.pathExists path) (parseLanguageSnippets path);
-
-              profileList = folder:
-                lib.mapAttrs (name: value: {
-                  userSettings = commonUserSettings // customUserSettings folder name;
-                  keybindings = commonKeybindings ++ customKeybindings folder name;
-
-                  extensions = commonExtensions ++ customExtensions folder name;
-
-                  languageSnippets = customLanguageSnippets folder name;
-                }) (filterFolders folder);
+                profileList folder;
             in
-              profileList folder;
-          in
-            {
-              default = {
-                userSettings = commonUserSettings;
-                keybindings = commonKeybindings;
-
-                extensions = commonExtensions;
-
-                enableUpdateCheck = false;
-                enableExtensionUpdateCheck = false;
-              };
-            }
-            // (profileList profilesFolder);
+              {
+                default = {
+                  extensions = commonExtensions;
+                };
+              }
+              // (profileList profilesFolder);
+          };
         };
       })
       # TODO: improve this

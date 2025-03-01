@@ -1,4 +1,6 @@
 {
+    "$schema": "vscode://schemas/settings/user",
+
     // style
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "Material Theme Darker High Contrast",
@@ -69,5 +71,6 @@
         "*.h": "c"
     },
     "files.eol": "\n",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "update.mode": "manual"
 }
