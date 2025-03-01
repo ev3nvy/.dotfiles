@@ -1,7 +1,7 @@
 {lib, ...}: let
   linesPat = "[\n]";
   lineCommentsPat = "^([[:space:]]*//.*)$";
-  inlineCommentsPat = "(.*,?)[[:space:]]*//.*";
+  inlineCommentsPat = "(.*[\]0-9e\"][[:space:]]*,?)[[:space:]]*//.*";
   trailingCommasPat = ",([[:space:]]*)(}|\])";
 
   # convert string to list of strings (one string is one line)
@@ -49,11 +49,18 @@
   in
     lib.strings.concatStrings (concatNestedListsToList (matchLastComma str));
 
+
+  fromJSONC = str: let
+    noComments = removeInlineComments (removeSingleLineComments str);
+    stringified = builtins.concatStringsSep "\n" noComments;
+  in
+    builtins.fromJSON stringified;
+
   fromJSONCWithTrailingCommas = str: let
     noComments = removeInlineComments (removeSingleLineComments str);
     stringified = removeTrailingComma (builtins.concatStringsSep "\n" noComments);
   in
     builtins.fromJSON stringified;
 in {
-  inherit fromJSONCWithTrailingCommas;
+  inherit fromJSONC fromJSONCWithTrailingCommas;
 }

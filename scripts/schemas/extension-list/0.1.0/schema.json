@@ -1,0 +1,17 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "List of extensions",
+    "description": "List of extensions to be installed for the given VSCode profile.",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "description": "A field for the [JSON schema](https://json-schema.org/) specification",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "extensions": {
+            "$ref": "vscode://schemas/extensions#/properties/recommendations"
+        }
+    },
+    "required": ["$schema", "extensions"]
+}

@@ -95,7 +95,7 @@
             then [
               inputs.home-manager.nixosModules.home-manager
               {
-                ${modulesNamespace}.metadata.homeManager.username = username;
+                ${modulesNamespace}.metadata.homeManager = {inherit username;};
 
                 home-manager = {
                   # TODO: look into what these do
@@ -106,7 +106,16 @@
                     inherit username homeDirectory;
                   };
                   sharedModules = [inputs.nix-index-database.hmModules.nix-index];
-                  users."${username}" = import ./nix/systems/${hostname}/home.nix;
+                  users."${username}" = {
+                    config,
+                    lib,
+                    ...
+                  }: {
+                    # HACK: this is a very ugly way of getting access to hm config value; if I find
+                    #       a better way, I'm getting rid of this ASAP
+                    options.${modulesNamespace}.config = lib.mkOption {default = config;};
+                    imports = [./nix/systems/${hostname}/home.nix];
+                  };
                 };
               }
             ]

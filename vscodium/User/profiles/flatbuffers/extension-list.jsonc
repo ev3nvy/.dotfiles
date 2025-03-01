@@ -1,0 +1,4 @@
+{
+    "$schema": "../../../../scripts/schemas/extension-list/0.1.0/schema.json",
+    "extensions": ["floxay.vscode-flatbuffers"]
+}

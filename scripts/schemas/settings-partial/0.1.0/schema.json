@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Partial settings list",
+    "description": "List of settings to be added for the given VSCode profile.",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "description": "A field for the [JSON schema](https://json-schema.org/) specification",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "settings": {
+            "description": "VSCode settings.",
+            "$ref": "vscode://schemas/settings/user"
+        }
+    },
+    "required": ["$schema", "settings"]
+}
