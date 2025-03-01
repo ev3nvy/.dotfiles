@@ -1,70 +1,14 @@
 {
     "recommendations": [
-        // general
-        "albymor.increment-selection",
-        "earshinov.simple-alignment",
+        // editorconfig
+
         "editorconfig.editorconfig",
-        "equinusocio.vsc-material-theme",
-        "mkhl.direnv",
-        "phil294.git-log--graph",
-        "pkief.material-icon-theme",
-        "reduckted.vscode-gitweblinks",
-        "ritwickdey.liveserver",
-        "usernamehw.errorlens",
-        "waderyan.gitblame",
-        "wakatime.vscode-wakatime",
-
-        // bash
-        "timonwong.shellcheck",
-
-        // clang
-        "llvm-vs-code-extensions.vscode-clangd",
-        "notskm.clang-tidy",
-        "xaver.clang-format",
-
-        // css
-        "pranaygp.vscode-css-peek",
-
-        // excalidraw
-        "pomdtr.excalidraw-editor",
-
-        // flatbuffers
-        "floxay.vscode-flatbuffers",
-
-        // js/ts
+        // json
         "biomejs.biome",
-        "dbaeumer.vscode-eslint",
 
         // nix
+        "mkhl.direnv",
         "jnoortheen.nix-ide",
         "kamadorueda.alejandra",
-
-        // python
-        "charliermarsh.ruff",
-        "ms-python.debugpy",
-        "ms-python.mypy-type-checker",
-        "ms-python.python",
-
-        // rust
-        "rust-lang.rust-analyzer",
-        "serayuzgur.crates",
-
-        // toml
-        "tamasfe.even-better-toml",
-    ],
-    // this requires an extension which is not available on Open VSX, instead this just serves as a reminder
-    "unwantedRecommendations": [
-        // I never use jupyter so I want to be reminded to uninstall it
-        "ms-toolsai.jupyter",
-        "ms-toolsai.jupyter-keymap",
-        "ms-toolsai.jupyter-renderers",
-        "ms-toolsai.vscode-jupyter-cell-tags",
-        "ms-toolsai.vscode-jupyter-slideshow",
-
-        // too bloated, features I use also exist as their own small extensions (e.g. log--graph, blame, ...)
-        "eamodio.gitlens",
-
-        // tried it out once and I hate it (subjective opinion)
-        "moalamri.inline-fold",
     ],
 }
