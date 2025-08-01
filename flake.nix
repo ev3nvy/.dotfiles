@@ -18,6 +18,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -80,6 +88,10 @@
       modulesNamespace ? "customModule",
       useLanzaboote ? false,
       includeHomeManager ? true,
+      # TODO: I'd like to test out different DEs/WMs so maybe I should declare them as an enum and
+      #       then have a `activeDe = "plasma6"`; also look into specializatons:
+      #       https://www.reddit.com/r/NixOS/comments/1fwrary/comment/lqhnon9
+      usePlasmaManager ? true,
     }:
       nixpkgs.lib.nixosSystem {
         inherit system;
@@ -93,7 +105,10 @@
             {
               networking.hostName = hostname;
 
-              ${modulesNamespace}.metadata.homeManager.enabled = includeHomeManager;
+              ${modulesNamespace}.metadata = {
+                homeManager.enabled = includeHomeManager;
+                plasmaManager.enabled = usePlasmaManager;
+              };
             }
             (import ./nix/modules/nixos {inherit modulesNamespace;})
           ]
@@ -123,13 +138,22 @@
                     inherit username homeDirectory;
                     inherit (config.${modulesNamespace}) metadata;
                   };
-                  sharedModules = [
-                    inputs.nix-index-database.homeModules.nix-index
-                    inputs.zen-browser.homeModules.beta
-                  ];
+                  sharedModules =
+                    [
+                      inputs.nix-index-database.homeModules.nix-index
+                      inputs.zen-browser.homeModules.beta
+                    ]
+                    ++ (
+                      if usePlasmaManager
+                      then [
+                        inputs.plasma-manager.homeManagerModules.plasma-manager
+                        ./nix/modules/nixos/system/plasma.nix
+                      ]
+                      else []
+                    );
                   users."${username}" = import ./nix/systems/${hostname}/home.nix;
                 };
-              }
+              })
             ]
             else []
           )
@@ -148,6 +172,7 @@
           hostname = "ev3nvy-desktop";
           dotfiles = "${homeDirectory}/.dotfiles";
           useLanzaboote = true;
+          usePlasmaManager = false;
         };
     };
 

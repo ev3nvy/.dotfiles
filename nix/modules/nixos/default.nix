@@ -25,6 +25,13 @@
             type = lib.types.nullOr lib.types.str;
           };
         };
+        plasmaManager = {
+          enabled = lib.mkOption {
+            example = true;
+            description = "Whether Plasma-Manager is enabled for the current system.";
+            type = lib.types.bool;
+          };
+        };
       };
     };
   };
