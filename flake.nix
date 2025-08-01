@@ -75,6 +75,7 @@
       username,
       homeDirectory,
       hostname,
+      dotfiles,
       modules ? [],
       modulesNamespace ? "customModule",
       useLanzaboote ? false,
@@ -108,8 +109,10 @@
             if includeHomeManager
             then [
               inputs.home-manager.nixosModules.home-manager
-              {
-                ${modulesNamespace}.metadata.homeManager.username = username;
+              ({config, ...}: {
+                ${modulesNamespace}.metadata.homeManager = {
+                  inherit username dotfiles;
+                };
 
                 home-manager = {
                   # TODO: look into what these do
@@ -118,6 +121,7 @@
                   extraSpecialArgs = {
                     inherit inputs;
                     inherit username homeDirectory;
+                    inherit (config.${modulesNamespace}) metadata;
                   };
                   sharedModules = [
                     inputs.nix-index-database.homeModules.nix-index
@@ -133,13 +137,18 @@
       };
   in {
     nixosConfigurations = {
-      ev3nvy-desktop = createNixosConfiguration {
-        system = "x86_64-linux";
+      ev3nvy-desktop = let
         username = "ev3nvy";
-        homeDirectory = "/home/ev3nvy";
-        hostname = "ev3nvy-desktop";
-        useLanzaboote = true;
-      };
+        homeDirectory = "/home/${username}";
+      in
+        createNixosConfiguration {
+          inherit username homeDirectory;
+
+          system = "x86_64-linux";
+          hostname = "ev3nvy-desktop";
+          dotfiles = "${homeDirectory}/.dotfiles";
+          useLanzaboote = true;
+        };
     };
 
     packages = forAllSystems (
