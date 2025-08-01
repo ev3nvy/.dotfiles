@@ -23,6 +23,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: use nixpkgs version once it is added (pr: https://github.com/NixOS/nixpkgs/pull/363992,
+    #       tracking issue: https://github.com/NixOS/nixpkgs/issues/327982)
+    #
+    # key points for why this hasn't happened yet:
+    # - https://github.com/NixOS/nixpkgs/issues/327982#issuecomment-2901415494
+    # - https://github.com/NixOS/nixpkgs/issues/327982#issuecomment-2903811147
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
     alejandra = {
       url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -105,7 +119,10 @@
                     inherit inputs;
                     inherit username homeDirectory;
                   };
-                  sharedModules = [inputs.nix-index-database.hmModules.nix-index];
+                  sharedModules = [
+                    inputs.nix-index-database.homeModules.nix-index
+                    inputs.zen-browser.homeModules.beta
+                  ];
                   users."${username}" = import ./nix/systems/${hostname}/home.nix;
                 };
               }
