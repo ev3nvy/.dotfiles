@@ -17,15 +17,17 @@
     albymor.increment-selection
     earshinov.simple-alignment
     editorconfig.editorconfig
-    equinusocio.vsc-material-theme
     mkhl.direnv
     phil294.git-log--graph
     pkief.material-icon-theme
     reduckted.vscode-gitweblinks
     ritwickdey.liveserver
+    t3dotgg.vsc-material-theme-but-i-wont-sue-you
     usernamehw.errorlens
     waderyan.gitblame
     wakatime.vscode-wakatime
+
+    extensionsNix.vscode-marketplace.danprince.vsnetrw
   ];
   bashExtensions = with extensionsNix.open-vsx; [
     timonwong.shellcheck
@@ -59,8 +61,8 @@
   ];
   rustExtensions = with extensionsNix.open-vsx;
     [
+      barbosshack.crates-io
       rust-lang.rust-analyzer
-      serayuzgur.crates
     ]
     ++ tomlExtensions;
   tomlExtensions = with extensionsNix.open-vsx; [
