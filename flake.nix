@@ -52,10 +52,7 @@
 
     nil = {
       url = "github:oxalica/nil";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     rust-overlay = {
