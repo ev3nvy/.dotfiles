@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # pin to specific commit because most changes probably don't apply to my hardware
+    nixos-hardware.url = "github:NixOS/nixos-hardware/d1bfa8f6ccfb5c383e1eba609c1eb67ca24ed153";
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs = {
@@ -170,6 +173,34 @@
           dotfiles = "${homeDirectory}/.dotfiles";
           useLanzaboote = true;
           usePlasmaManager = false;
+        };
+      shadow-moses = let
+        username = "ev3nvy";
+        homeDirectory = "/home/${username}";
+      in
+        createNixosConfiguration {
+          inherit username homeDirectory;
+
+          system = "x86_64-linux";
+          hostname = "shadow-moses";
+          dotfiles = "${homeDirectory}/.dotfiles";
+          # I actually own a "Lenovo Yoga Slim 7 Pro 16ACH6" not an Ideapad, but the way mine is
+          # specced fits (a version of) this model
+          modules = [
+            inputs.nixos-hardware.nixosModules.lenovo-ideapad-16ach6
+            ({
+              config,
+              lib,
+              ...
+            }: {
+              nixpkgs.config.allowUnfreePredicate = pkg:
+                builtins.elem (lib.getName pkg) [
+                  "nvidia-settings"
+                  "nvidia-x11"
+                ];
+            })
+          ];
+          useLanzaboote = true;
         };
     };
 

@@ -1,8 +1,10 @@
 {
+  config,
   pkgs,
   inputs,
   username,
   homeDirectory,
+  metadata,
   ...
 }: {
   imports = [
@@ -37,16 +39,11 @@
   ];
 
   services = {
-    gpg-agent = {
-      enable = true;
-      defaultCacheTtl = 3600;
-      pinentryPackage = pkgs.pinentry-qt;
-    };
     syncthing.enable = true;
   };
 
   home.file = {
-    ".config/keepassxc/keepassxc.ini".source = ../../../keepassxc/keepassxc.ini;
+    ".config/keepassxc/keepassxc.ini".source = config.lib.file.mkOutOfStoreSymlink "${metadata.homeManager.dotfiles}/keepassxc/keepassxc.ini";
   };
 
   programs = {
@@ -87,6 +84,8 @@
     gpg.enable = true;
     mpv.enable = true;
     nix-index.enable = true;
+    zen-browser.enable = true;
+
     home-manager.enable = true;
   };
 }
