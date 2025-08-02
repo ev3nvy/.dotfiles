@@ -1,8 +1,10 @@
 {
+  config,
   pkgs,
   inputs,
   username,
   homeDirectory,
+  metadata,
   ...
 }: {
   imports = [
@@ -41,7 +43,7 @@
   };
 
   home.file = {
-    ".config/keepassxc/keepassxc.ini".source = ../../../keepassxc/keepassxc.ini;
+    ".config/keepassxc/keepassxc.ini".source = config.lib.file.mkOutOfStoreSymlink "${metadata.homeManager.dotfiles}/keepassxc/keepassxc.ini";
   };
 
   programs = {
