@@ -50,7 +50,12 @@
     tools.enable = true;
   };
 
-  programs.firefox.enable = true;
+  programs = {
+    firefox.enable = true;
+    # I make my ssh keys available using keepassxc
+    # see: https://discourse.nixos.org/t/how-to-set-up-a-system-wide-ssh-agent-that-would-work-on-all-terminals/14156/11
+    ssh.startAgent = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
