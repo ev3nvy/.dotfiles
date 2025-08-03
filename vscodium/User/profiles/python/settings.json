@@ -1,0 +1,79 @@
+{
+    // style
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Material Theme Darker High Contrast",
+    "workbench.colorCustomizations": {
+        "[Material Theme Darker High Contrast]": {
+            "activityBarBadge.background": "#7CB342",
+            "activityBar.activeBorder": "#7CB342",
+            "list.activeSelectionForeground": "#7CB342",
+            "list.inactiveSelectionForeground": "#7CB342",
+            "list.highlightForeground": "#7CB342",
+            "scrollbarSlider.activeBackground": "#7CB34250",
+            "editorSuggestWidget.highlightForeground": "#7CB342",
+            "textLink.foreground": "#7CB342",
+            "progressBar.background": "#7CB342",
+            "pickerGroup.foreground": "#7CB342",
+            "tab.activeBorder": "#7CB342",
+            "notificationLink.foreground": "#7CB342",
+            "editorWidget.resizeBorder": "#7CB342",
+            "editorWidget.border": "#7CB342",
+            "settings.modifiedItemIndicator": "#7CB342",
+            "settings.headerForeground": "#7CB342",
+            "panelTitle.activeBorder": "#7CB342",
+            "breadcrumb.activeSelectionForeground": "#7CB342",
+            "menu.selectionForeground": "#7CB342",
+            "menubar.selectionForeground": "#7CB342",
+            "editor.findMatchBorder": "#7CB342",
+            "selection.background": "#7CB34240",
+            "statusBarItem.remoteBackground": "#7CB342"
+        },
+        "editorBracketHighlight.foreground1": "#69B00B",
+        "editorBracketHighlight.foreground2": "#00A0A0",
+        "editorBracketHighlight.foreground3": "#C0C000",
+        "editorBracketHighlight.foreground4": "#ff5050",
+        "editorBracketHighlight.foreground5": "#ffa200",
+        "editorBracketHighlight.foreground6": "#B00B69"
+    },
+    "materialTheme.accent": "Lime",
+    "material-icon-theme.files.color": "#7CB342",
+    "material-icon-theme.folders.theme": "classic",
+    "material-icon-theme.files.associations": {
+        "justfile": "makefile",
+        "biome.jsonc": "biome"
+        // "README.*.md": "readme", // blocked by: https://github.com/Microsoft/vscode/issues/12493
+    },
+
+    // visual
+    "editor.cursorBlinking": "phase",
+    "editor.lineNumbers": "relative",
+    "editor.renderWhitespace": "trailing",
+    "editor.rulers": [99],
+    "editor.semanticHighlighting.enabled": true, // color function params in body differently, etc.
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "terminal.integrated.minimumContrastRatio": 1,
+    "window.titleBarStyle": "custom",
+    "workbench.activityBar.location": "hidden",
+    "workbench.editor.showTabs": "none",
+    "workbench.sideBar.location": "right",
+
+    // behavior
+    "editor.minimap.showSlider": "always",
+    "editor.selectionClipboard": false, // middle-click paste
+    "editor.tabSize": 2,
+    "extensions.autoCheckUpdates": false,
+    "files.associations": {
+        "justfile": "makefile",
+        ".clang{d,-format,-tidy}": "yaml",
+        ".env": "dotenv",
+        "*.h": "c"
+    },
+    "files.eol": "\n",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+    }
+}
