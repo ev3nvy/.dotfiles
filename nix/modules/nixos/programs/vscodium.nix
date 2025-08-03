@@ -22,9 +22,9 @@ in {
 
     extensionsNix = inputs.nix-vscode-extensions.extensions.${pkgs.system};
 
+    dotfilesUserPath = "${metadata.homeManager.dotfiles}/vscodium/User";
+
     userPath = ../../../../vscodium/User;
-    commonUserSettingsPath = "${userPath}/settings.json";
-    commonKeybindingsPath = "${userPath}/keybindings.json";
     commonExtensionsPath = "${userPath}/extension-list.jsonc";
 
     parseExtensionList = path: let
@@ -35,76 +35,64 @@ in {
     in
       mapStringListToAttrs extensionStringList;
 
-    commonUserSettings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile commonUserSettingsPath);
-    commonKeybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile commonKeybindingsPath);
     commonExtensions = parseExtensionList commonExtensionsPath;
   in
     lib.mkIf cfg.enable (lib.mkMerge [
       (lib.mkIf hmEnabled {
-        home-manager.users.${metadata.homeManager.username}.programs.vscode = {
-          enable = true;
-          package = pkgs.vscodium;
+        home-manager.users.${metadata.homeManager.username} = {config, ...}: {
+          programs.vscode = {
+            enable = true;
+            package = pkgs.vscodium;
 
-          profiles = let
-            profilesFolder = "${userPath}/profiles";
-
-            profileList = folder: let
+            profiles = let
               folderItems = folder: builtins.readDir folder;
 
               # NOTE: this ignores symlinks
               filterFiles = folder: lib.filterAttrs (name: value: value == "regular") (folderItems folder);
               filterFolders = folder: lib.filterAttrs (name: value: value == "directory") (folderItems folder);
 
-              profileUserSettingsPath = folder: name: "${folder}/${name}/settings.partial.jsonc";
-              profileKeybindingsPath = folder: name: "${folder}/${name}/keybindings.partial.jsonc";
-              profileExtensionsPath = folder: name: "${folder}/${name}/extension-list.jsonc";
-              profileLanguageSnippetsPath = folder: name: "${folder}/${name}/snippets";
-
-              parseCustomUserSettings = path: (jsonc.fromJSONC (builtins.readFile path)).settings;
-              parseCustomKeybindings = path: (jsonc.fromJSONC (builtins.readFile path)).keybindings;
               parseLanguageSnippets = path: lib.mapAttrs (name: value: lib.importJSON "${path}/${name}") (filterFiles path);
 
-              customUserSettings = folder: name: let
-                path = profileUserSettingsPath folder name;
-              in
-                lib.optionalAttrs (builtins.pathExists path) (parseCustomUserSettings path);
-              customKeybindings = folder: name: let
-                path = profileKeybindingsPath folder name;
-              in
-                lib.optionals (builtins.pathExists path) (parseCustomKeybindings path);
               customExtensions = folder: name: let
-                path = profileExtensionsPath folder name;
+                path = "${folder}/${name}/extension-list.jsonc";
               in
                 lib.optionals (builtins.pathExists path) (parseExtensionList path);
               customLanguageSnippets = folder: name: let
-                path = profileLanguageSnippetsPath folder name;
+                path = "${folder}/${name}/snippets";
               in
                 lib.optionalAttrs (builtins.pathExists path) (parseLanguageSnippets path);
 
-              profileList = folder:
-                lib.mapAttrs (name: value: {
-                  userSettings = commonUserSettings // customUserSettings folder name;
-                  keybindings = commonKeybindings ++ customKeybindings folder name;
+              profileList = dotfilesFolder: relativeFolder:
+                lib.mapAttrs (name: _: {
+                  userSettings = let
+                    # required for builtins.pathExists
+                    relativePath = "${relativeFolder}/${name}/settings.json";
+                    path = "${dotfilesFolder}/${name}/settings.json";
+                  in
+                    lib.mkIf (builtins.pathExists relativePath) (config.lib.file.mkOutOfStoreSymlink path);
 
-                  extensions = commonExtensions ++ customExtensions folder name;
+                  keybindings = let
+                    # required for builtins.pathExists
+                    relativePath = "${relativeFolder}/${name}/keybindings.json";
+                    path = "${dotfilesFolder}/${name}/keybindings.json";
+                  in
+                    lib.mkIf (builtins.pathExists relativePath) (config.lib.file.mkOutOfStoreSymlink path);
 
-                  languageSnippets = customLanguageSnippets folder name;
-                }) (filterFolders folder);
+                  extensions = commonExtensions ++ customExtensions relativeFolder name;
+
+                  languageSnippets = customLanguageSnippets relativeFolder name;
+                }) (filterFolders relativeFolder);
             in
-              profileList folder;
-          in
-            {
-              default = {
-                userSettings = commonUserSettings;
-                keybindings = commonKeybindings;
+              {
+                default = {
+                  userSettings = config.lib.file.mkOutOfStoreSymlink "${dotfilesUserPath}/settings.json";
+                  keybindings = config.lib.file.mkOutOfStoreSymlink "${dotfilesUserPath}/keybindings.json";
 
-                extensions = commonExtensions;
-
-                enableUpdateCheck = false;
-                enableExtensionUpdateCheck = false;
-              };
-            }
-            // (profileList profilesFolder);
+                  extensions = commonExtensions;
+                };
+              }
+              // (profileList "${dotfilesUserPath}/profiles" "${userPath}/profiles");
+          };
         };
       })
       # TODO: improve this
