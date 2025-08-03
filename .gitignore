@@ -41,10 +41,24 @@
 !/nix/systems/**/hardware-configuration.nix
 !/nix/systems/**/home.nix
 
+!/scripts/
+!/scripts/schemas/
+!/scripts/schemas/*/
+!/scripts/schemas/*/*.*.*/
+!/scripts/schemas/*/*.*.*/schema.json
+
 !/vscodium/
 !/vscodium/User/
-!/vscodium/User/snippets/
-!/vscodium/User/snippets/*.json
+!/vscodium/User/profiles/
+!/vscodium/User/profiles/*
+!/vscodium/User/profiles/*/snippets/
+!/vscodium/User/profiles/*/snippets/*.json
+!/vscodium/User/profiles/*/extension-list.jsonc
+!/vscodium/User/profiles/*/keybindings.json
+!/vscodium/User/profiles/*/keybindings.partial.jsonc
+!/vscodium/User/profiles/*/settings.json
+!/vscodium/User/profiles/*/settings.partial.jsonc
+!/vscodium/User/extension-list.jsonc
 !/vscodium/User/keybindings.json
 !/vscodium/User/settings.json
 

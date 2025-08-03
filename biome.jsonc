@@ -4,10 +4,17 @@
         "include": [
             ".vscode/extensions.json",
             "biome.jsonc",
-            // snippets are detected as their own file type in vscode so biome refuses to format them
-            // "vscodium/User/snippets/*.json",
+            "scripts/schemas/*/*.*.*/schema.json",
+            "vscodium/User/extension-list.jsonc",
             "vscodium/User/keybindings.json",
-            "vscodium/User/settings.json"
+            "vscodium/User/settings.json",
+            // snippets are detected as their own file type in vscode so biome refuses to format them
+            // "vscodium/User/profiles/*/snippets/*.json",
+            "vscodium/User/profiles/*/extension-list.jsonc",
+            "vscodium/User/profiles/*/keybindings.json",
+            "vscodium/User/profiles/*/keybindings.partial.jsonc",
+            "vscodium/User/profiles/*/settings.json",
+            "vscodium/User/profiles/*/settings.partial.jsonc"
         ]
     },
     "formatter": {
@@ -31,7 +38,18 @@
         {
             // https://code.visualstudio.com/docs/languages/json#_json-with-comments
             // "The mode also accepts trailing commas, but they are discouraged and the editor will display a warning."
-            "include": ["biome.jsonc"],
+            "include": [
+                "biome.jsonc",
+                "scripts/schemas/*/*.*.*/schema.json",
+                "vscodium/User/extension-list.jsonc",
+                "vscodium/User/keybindings.json",
+                "vscodium/User/settings.json",
+                "vscodium/User/profiles/*/extension-list.jsonc",
+                "vscodium/User/profiles/*/keybindings.json",
+                "vscodium/User/profiles/*/keybindings.partial.jsonc",
+                "vscodium/User/profiles/*/settings.json",
+                "vscodium/User/profiles/*/settings.partial.jsonc"
+            ],
             "json": {
                 "formatter": {
                     "trailingCommas": "none"

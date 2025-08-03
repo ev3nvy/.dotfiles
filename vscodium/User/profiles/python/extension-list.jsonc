@@ -1,0 +1,9 @@
+{
+    "$schema": "../../../../scripts/schemas/extension-list/0.1.0/schema.json",
+    "extensions": [
+        "charliermarsh.ruff",
+        "ms-python.debugpy",
+        "ms-python.mypy-type-checker",
+        "ms-python.python"
+    ]
+}

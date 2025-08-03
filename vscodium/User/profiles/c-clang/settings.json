@@ -69,5 +69,22 @@
         "*.h": "c"
     },
     "files.eol": "\n",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "[c]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+    },
+    "[makefile]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 2
+    },
+
+    "clangd.arguments": ["--log=verbose"]
 }

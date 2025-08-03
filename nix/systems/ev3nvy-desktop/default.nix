@@ -45,6 +45,7 @@
 
   ${modulesNamespace} = {
     cli.enable = true;
+    programs.enable = true;
     services.enable = true;
     system.enable = true;
     tools.enable = true;

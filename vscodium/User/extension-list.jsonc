@@ -1,0 +1,17 @@
+{
+    "$schema": "../../scripts/schemas/extension-list/0.1.0/schema.json",
+    "extensions": [
+        "albymor.increment-selection",
+        "earshinov.simple-alignment",
+        "editorconfig.editorconfig",
+        "mkhl.direnv",
+        "phil294.git-log--graph",
+        "pkief.material-icon-theme",
+        "reduckted.vscode-gitweblinks",
+        "ritwickdey.liveserver",
+        "t3dotgg.vsc-material-theme-but-i-wont-sue-you",
+        "usernamehw.errorlens",
+        "waderyan.gitblame",
+        "wakatime.vscode-wakatime"
+    ]
+}

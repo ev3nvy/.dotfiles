@@ -69,5 +69,18 @@
         "*.h": "c"
     },
     "files.eol": "\n",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "[markdown]": {
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.wordWrap": "off"
+    },
+
+    "excalidraw.theme": "dark",
+    "excalidraw.image": {
+        "exportScale": 1,
+        "exportWithBackground": false,
+        "exportWithDarkMode": true
+    }
 }

@@ -69,5 +69,12 @@
         "*.h": "c"
     },
     "files.eol": "\n",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    "[nix]": {
+        "editor.defaultFormatter": "kamadorueda.alejandra",
+        "editor.formatOnSave": true
+    },
+
+    "nix.enableLanguageServer": true
 }

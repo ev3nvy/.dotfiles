@@ -1,0 +1,17 @@
+{
+    "$schema": "../../../../scripts/schemas/settings-partial/0.1.0/schema.json",
+    "settings": {
+        "[markdown]": {
+            "editor.formatOnSave": true,
+            "editor.tabSize": 4,
+            "editor.wordWrap": "off"
+        },
+
+        "excalidraw.theme": "dark",
+        "excalidraw.image": {
+            "exportScale": 1,
+            "exportWithBackground": false,
+            "exportWithDarkMode": true
+        }
+    }
+}
