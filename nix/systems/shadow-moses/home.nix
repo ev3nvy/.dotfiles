@@ -76,7 +76,7 @@
       enableFishIntegration = true;
       settings = {
         auto-update = "check";
-        theme = "MaterialDarker";
+        theme = "Material Darker";
         font-family = "JetBrainsMono Nerd Font";
         font-size = 12;
       };
