@@ -2,7 +2,8 @@
   metadata,
   namespace,
   ...
-}: _: {
+}:
+_: {
   programs = {
     # I'd like to have vim always available, so I define it here
     vim.enable = true;

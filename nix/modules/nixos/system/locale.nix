@@ -2,14 +2,17 @@
   metadata,
   namespace,
   ...
-}: {
+}:
+{
   config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.${namespace}.system.locale;
-in {
+in
+{
   options = {
     ${namespace}.system.locale.enable = lib.mkEnableOption "locale module";
   };

@@ -2,14 +2,17 @@
   metadata,
   namespace,
   ...
-}: {
+}:
+{
   config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.${namespace}.system.audio;
-in {
+in
+{
   options = {
     ${namespace}.system.audio.enable = lib.mkEnableOption "audio module";
   };

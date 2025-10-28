@@ -2,10 +2,11 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   hardware.graphics.enable = true;
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     # Modesetting is required.
@@ -46,7 +47,8 @@
     };
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (lib.getName pkg) [
       "nvidia-settings"
       "nvidia-x11"

@@ -6,7 +6,8 @@
   homeDirectory,
   metadata,
   ...
-}: {
+}:
+{
   imports = [
     ../common.nix
     ../../programs/unfree.nix
@@ -43,7 +44,8 @@
   };
 
   home.file = {
-    ".config/keepassxc/keepassxc.ini".source = config.lib.file.mkOutOfStoreSymlink "${metadata.homeManager.dotfiles}/keepassxc/keepassxc.ini";
+    ".config/keepassxc/keepassxc.ini".source =
+      config.lib.file.mkOutOfStoreSymlink "${metadata.homeManager.dotfiles}/keepassxc/keepassxc.ini";
   };
 
   programs = {

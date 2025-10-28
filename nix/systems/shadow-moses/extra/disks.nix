@@ -1,4 +1,5 @@
-{username, ...}: {
+{ username, ... }:
+{
   fileSystems."/run/media/${username}/Data" = {
     device = "/dev/disk/by-uuid/7228EBB428EB758F";
     # required, otherwise disk is mounted as read-only

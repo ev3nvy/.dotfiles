@@ -64,38 +64,45 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    supportedSystems = ["x86_64-linux"];
-    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      ...
+    }@inputs:
+    let
+      supportedSystems = [ "x86_64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
-    # https://github.com/redyf/nixdots/blob/72420a5d4ee128eea41cef0c385fb15a43be4077/flake.nix#L63-L116
-    createNixosConfiguration = {
-      system,
-      username,
-      homeDirectory,
-      hostname,
-      dotfiles,
-      modules ? [],
-      modulesNamespace ? "customModule",
-      useLanzaboote ? false,
-      includeHomeManager ? true,
-      # TODO: I'd like to test out different DEs/WMs so maybe I should declare them as an enum and
-      #       then have a `activeDe = "plasma6"`; also look into specializatons:
-      #       https://www.reddit.com/r/NixOS/comments/1fwrary/comment/lqhnon9
-      usePlasmaManager ? true,
-    }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username homeDirectory hostname modulesNamespace;
-        };
-        modules =
-          [
+      # https://github.com/redyf/nixdots/blob/72420a5d4ee128eea41cef0c385fb15a43be4077/flake.nix#L63-L116
+      createNixosConfiguration =
+        {
+          system,
+          username,
+          homeDirectory,
+          hostname,
+          dotfiles,
+          modules ? [ ],
+          modulesNamespace ? "customModule",
+          useLanzaboote ? false,
+          includeHomeManager ? true,
+          # TODO: I'd like to test out different DEs/WMs so maybe I should declare them as an enum and
+          #       then have a `activeDe = "plasma6"`; also look into specializatons:
+          #       https://www.reddit.com/r/NixOS/comments/1fwrary/comment/lqhnon9
+          usePlasmaManager ? true,
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit
+              username
+              homeDirectory
+              hostname
+              modulesNamespace
+              ;
+          };
+          modules = [
             ./nix/systems/${hostname}
             {
               networking.hostName = hostname;
@@ -105,112 +112,126 @@
                 plasmaManager.enabled = usePlasmaManager;
               };
             }
-            (import ./nix/modules/nixos {inherit modulesNamespace;})
+            (import ./nix/modules/nixos { inherit modulesNamespace; })
           ]
           ++ (
-            if useLanzaboote
-            then [
-              inputs.lanzaboote.nixosModules.lanzaboote
-              ./nix/modules/nixos/system/lanzaboote.nix
-            ]
-            else []
+            if useLanzaboote then
+              [
+                inputs.lanzaboote.nixosModules.lanzaboote
+                ./nix/modules/nixos/system/lanzaboote.nix
+              ]
+            else
+              [ ]
           )
           ++ (
-            if includeHomeManager
-            then [
-              inputs.home-manager.nixosModules.home-manager
-              ({config, ...}: {
-                ${modulesNamespace}.metadata.homeManager = {
-                  inherit username dotfiles;
-                };
+            if includeHomeManager then
+              [
+                inputs.home-manager.nixosModules.home-manager
+                (
+                  { config, ... }:
+                  {
+                    ${modulesNamespace}.metadata.homeManager = {
+                      inherit username dotfiles;
+                    };
 
-                home-manager = {
-                  # TODO: look into what these do
-                  # useUserPackages = true;
-                  # useGlobalPkgs = false;
-                  extraSpecialArgs = {
-                    inherit inputs;
-                    inherit username homeDirectory;
-                    inherit (config.${modulesNamespace}) metadata;
-                  };
-                  sharedModules =
-                    [
-                      inputs.nix-index-database.homeModules.nix-index
-                      inputs.zen-browser.homeModules.beta
-                    ]
-                    ++ (
-                      if usePlasmaManager
-                      then [
-                        inputs.plasma-manager.homeManagerModules.plasma-manager
-                        ./nix/modules/nixos/system/plasma.nix
+                    home-manager = {
+                      # TODO: look into what these do
+                      # useUserPackages = true;
+                      # useGlobalPkgs = false;
+                      extraSpecialArgs = {
+                        inherit inputs;
+                        inherit username homeDirectory;
+                        inherit (config.${modulesNamespace}) metadata;
+                      };
+                      sharedModules = [
+                        inputs.nix-index-database.homeModules.nix-index
+                        inputs.zen-browser.homeModules.beta
                       ]
-                      else []
-                    );
-                  users."${username}" = import ./nix/systems/${hostname}/home.nix;
-                };
-              })
-            ]
-            else []
+                      ++ (
+                        if usePlasmaManager then
+                          [
+                            inputs.plasma-manager.homeManagerModules.plasma-manager
+                            ./nix/modules/nixos/system/plasma.nix
+                          ]
+                        else
+                          [ ]
+                      );
+                      users."${username}" = import ./nix/systems/${hostname}/home.nix;
+                    };
+                  }
+                )
+              ]
+            else
+              [ ]
           )
           ++ modules;
+        };
+    in
+    {
+      nixosConfigurations = {
+        ev3nvy-desktop =
+          let
+            username = "ev3nvy";
+            homeDirectory = "/home/${username}";
+          in
+          createNixosConfiguration {
+            inherit username homeDirectory;
+
+            system = "x86_64-linux";
+            hostname = "ev3nvy-desktop";
+            dotfiles = "${homeDirectory}/.dotfiles";
+            useLanzaboote = true;
+            usePlasmaManager = false;
+          };
+        shadow-moses =
+          let
+            username = "ev3nvy";
+            homeDirectory = "/home/${username}";
+          in
+          createNixosConfiguration {
+            inherit username homeDirectory;
+
+            system = "x86_64-linux";
+            hostname = "shadow-moses";
+            dotfiles = "${homeDirectory}/.dotfiles";
+            # I actually own a "Lenovo Yoga Slim 7 Pro 16ACH6" not an Ideapad, but the way mine is
+            # specced fits (a version of) this model
+            modules = [
+              inputs.nixos-hardware.nixosModules.lenovo-ideapad-16ach6
+              (
+                {
+                  config,
+                  lib,
+                  ...
+                }:
+                {
+                  nixpkgs.config.allowUnfreePredicate =
+                    pkg:
+                    builtins.elem (lib.getName pkg) [
+                      "nvidia-settings"
+                      "nvidia-x11"
+                    ];
+                }
+              )
+            ];
+            useLanzaboote = true;
+          };
       };
-  in {
-    nixosConfigurations = {
-      ev3nvy-desktop = let
-        username = "ev3nvy";
-        homeDirectory = "/home/${username}";
-      in
-        createNixosConfiguration {
-          inherit username homeDirectory;
 
-          system = "x86_64-linux";
-          hostname = "ev3nvy-desktop";
-          dotfiles = "${homeDirectory}/.dotfiles";
-          useLanzaboote = true;
-          usePlasmaManager = false;
-        };
-      shadow-moses = let
-        username = "ev3nvy";
-        homeDirectory = "/home/${username}";
-      in
-        createNixosConfiguration {
-          inherit username homeDirectory;
-
-          system = "x86_64-linux";
-          hostname = "shadow-moses";
-          dotfiles = "${homeDirectory}/.dotfiles";
-          # I actually own a "Lenovo Yoga Slim 7 Pro 16ACH6" not an Ideapad, but the way mine is
-          # specced fits (a version of) this model
-          modules = [
-            inputs.nixos-hardware.nixosModules.lenovo-ideapad-16ach6
-            ({
-              config,
-              lib,
-              ...
-            }: {
-              nixpkgs.config.allowUnfreePredicate = pkg:
-                builtins.elem (lib.getName pkg) [
-                  "nvidia-settings"
-                  "nvidia-x11"
-                ];
-            })
-          ];
-          useLanzaboote = true;
-        };
-    };
-
-    packages = forAllSystems (
-      system: let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in
-        with pkgs; rec {
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        in
+        with pkgs;
+        rec {
           codium = vscode-with-extensions.override (prev: {
             vscode = vscodium;
-            vscodeExtensions = with vscode-extensions;
-              prev.vscodeExtensions
-              or []
+            vscodeExtensions =
+              with vscode-extensions;
+              prev.vscodeExtensions or [ ]
               ++ [
                 biomejs.biome
                 jnoortheen.nix-ide
@@ -248,31 +269,33 @@
             exec ${codium}/bin/codium --user-data-dir "$dir" "$@"
           '';
         }
-    );
+      );
 
-    devShells = forAllSystems (
-      system: let
-        overlays = [(import inputs.rust-overlay)];
-        pkgs = import nixpkgs {
-          inherit system overlays;
-          config.allowUnfreePredicate = pkg:
-            builtins.elem (nixpkgs.lib.getName pkg) [
-              "clion"
-              "davinci-resolve"
+      devShells = forAllSystems (
+        system:
+        let
+          overlays = [ (import inputs.rust-overlay) ];
+          pkgs = import nixpkgs {
+            inherit system overlays;
+            config.allowUnfreePredicate =
+              pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "clion"
+                "davinci-resolve"
+              ];
+          };
+          rustVersion = "latest";
+          rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
+            extensions = [
+              "rust-src"
+              "rust-analyzer"
+              "clippy"
             ];
-        };
-        rustVersion = "latest";
-        rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
-          extensions = [
-            "rust-src"
-            "rust-analyzer"
-            "clippy"
-          ];
-        };
-      in {
-        default = pkgs.mkShell {
-          buildInputs =
-            [
+          };
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = [
               (pkgs.writeShellScriptBin "nixos_switch" "nixos-rebuild switch --show-trace --flake .")
               (pkgs.writeShellScriptBin "nixos_upgrade" "nix flake update")
               (pkgs.writeShellScriptBin "nixos_upgrade_switch" "nixos-rebuild switch --recreate-lock-file --flake .")
@@ -282,74 +305,77 @@
             ++ nixpkgs.lib.optionals (nixpkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vscodium) [
               self.packages.${system}.codium-dev
             ];
-        };
-        biome = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.biome
-          ];
-        };
-        cpp = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.jetbrains.clion
-          ];
-        };
-        flatbuffers = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.flatbuffers
-          ];
-        };
-        just = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.just
-          ];
-        };
-        nix = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.nixfmt-rfc-style
-            inputs.nil.packages.${system}.default
-          ];
-        };
-        nodejs-lts-jod = let
-          nodejs = pkgs.callPackage "${nixpkgs}/pkgs/development/web/nodejs/v22.nix" {
-            inherit (pkgs) python3 openssl;
           };
-        in
-          pkgs.mkShell {
-            inputsFrom = with self.devShells.${system}; [biome];
-
-            buildInputs = [
-              nodejs
+          biome = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.biome
             ];
           };
-        rust = pkgs.mkShell {
-          inputsFrom = with self.devShells.${system}; [toml];
-          nativeBuildInputs = [
-            rust
-            pkgs.bacon
-            pkgs.cargo-deny
-            pkgs.cargo-edit
-            pkgs.cargo-expand
-            pkgs.cargo-msrv
-            pkgs.cargo-update # to manage executables not available in nixpkgs
-            pkgs.cargo-watch
-            pkgs.cargo-workspaces
-            pkgs.cargo-zigbuild
-          ];
-        };
-        toml = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.taplo
-          ];
-        };
-        videoEditing = pkgs.mkShell {
-          packages = [
-            pkgs.davinci-resolve
-            pkgs.handbrake
-          ];
-        };
-      }
-    );
+          cpp = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.jetbrains.clion
+            ];
+          };
+          flatbuffers = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.flatbuffers
+            ];
+          };
+          just = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.just
+            ];
+          };
+          nix = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.nixfmt-rfc-style
+              inputs.nil.packages.${system}.default
+            ];
+          };
+          nodejs-lts-jod =
+            let
+              nodejs = pkgs.callPackage "${nixpkgs}/pkgs/development/web/nodejs/v22.nix" {
+                inherit (pkgs) python3 openssl;
+              };
+            in
+            pkgs.mkShell {
+              inputsFrom = with self.devShells.${system}; [ biome ];
 
-    formatter = nixpkgs.lib.genAttrs supportedSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
-  };
+              buildInputs = [
+                nodejs
+              ];
+            };
+          rust = pkgs.mkShell {
+            inputsFrom = with self.devShells.${system}; [ toml ];
+            nativeBuildInputs = [
+              rust
+              pkgs.bacon
+              pkgs.cargo-deny
+              pkgs.cargo-edit
+              pkgs.cargo-expand
+              pkgs.cargo-msrv
+              pkgs.cargo-update # to manage executables not available in nixpkgs
+              pkgs.cargo-watch
+              pkgs.cargo-workspaces
+              pkgs.cargo-zigbuild
+            ];
+          };
+          toml = pkgs.mkShell {
+            nativeBuildInputs = [
+              pkgs.taplo
+            ];
+          };
+          videoEditing = pkgs.mkShell {
+            packages = [
+              pkgs.davinci-resolve
+              pkgs.handbrake
+            ];
+          };
+        }
+      );
+
+      formatter = nixpkgs.lib.genAttrs supportedSystems (
+        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+      );
+    };
 }

@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   # TODO: figure out how to cleanly set some settings per-system (e.g. touchpads);
   #       this requires:
   #       1. merging the two configs cleanly

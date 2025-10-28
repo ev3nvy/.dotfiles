@@ -1,8 +1,10 @@
-{modulesNamespace}: {
+{ modulesNamespace }:
+{
   config,
   lib,
   ...
-}: {
+}:
+{
   options = {
     ${modulesNamespace} = {
       name = modulesNamespace;
@@ -36,16 +38,18 @@
     };
   };
 
-  imports = let
-    args = {
-      inherit (config.${modulesNamespace}) metadata;
-      namespace = modulesNamespace;
-    };
-  in [
-    (import ./cli args)
-    (import ./programs args)
-    (import ./services args)
-    (import ./system args)
-    (import ./tools args)
-  ];
+  imports =
+    let
+      args = {
+        inherit (config.${modulesNamespace}) metadata;
+        namespace = modulesNamespace;
+      };
+    in
+    [
+      (import ./cli args)
+      (import ./programs args)
+      (import ./services args)
+      (import ./system args)
+      (import ./tools args)
+    ];
 }

@@ -4,10 +4,11 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.programs.vscodium;
 
-  jsonc = import ../lib/jsonc-with-trailing-commas.nix {inherit lib;};
+  jsonc = import ../lib/jsonc-with-trailing-commas.nix { inherit lib; };
 
   extensionsNix = inputs.nix-vscode-extensions.extensions.${pkgs.system};
 
@@ -58,7 +59,8 @@
     ms-python.mypy-type-checker
     ms-python.python
   ];
-  rustExtensions = with extensionsNix.open-vsx;
+  rustExtensions =
+    with extensionsNix.open-vsx;
     [
       barbosshack.crates-io
       rust-lang.rust-analyzer
@@ -67,7 +69,8 @@
   tomlExtensions = with extensionsNix.open-vsx; [
     tamasfe.even-better-toml
   ];
-in {
+in
+{
   options.programs.vscodium = {
     enable = lib.mkEnableOption "VSCodium with my settings and extensions";
 
@@ -91,8 +94,12 @@ in {
         enable = true;
         package = pkgs.vscodium;
 
-        userSettings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../vscodium/User/settings.json);
-        keybindings = jsonc.fromJSONCWithTrailingCommas (builtins.readFile ../../vscodium/User/keybindings.json);
+        userSettings = jsonc.fromJSONCWithTrailingCommas (
+          builtins.readFile ../../vscodium/User/settings.json
+        );
+        keybindings = jsonc.fromJSONCWithTrailingCommas (
+          builtins.readFile ../../vscodium/User/keybindings.json
+        );
 
         # TODO: parse extensions from recommendations: grep -o '^[^/]*' .vscode/extensions.json | jq '.recommendations'
         extensions = generalExtensions;

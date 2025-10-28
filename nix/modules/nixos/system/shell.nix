@@ -2,14 +2,17 @@
   metadata,
   namespace,
   ...
-}: {
+}:
+{
   config,
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.${namespace}.system.shell;
-in {
+in
+{
   options = {
     ${namespace}.system.shell.enable = lib.mkEnableOption "shell module";
   };
