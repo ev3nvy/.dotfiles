@@ -48,11 +48,6 @@
       };
     };
 
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.1.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -219,7 +214,6 @@
               ++ [
                 biomejs.biome
                 jnoortheen.nix-ide
-                kamadorueda.alejandra
                 mkhl.direnv
               ];
           });
@@ -244,7 +238,7 @@
                     "editor.tabSize": 4,
                 },
                 "[nix]": {
-                    "editor.defaultFormatter": "kamadorueda.alejandra",
+                    "editor.defaultFormatter": "jnoortheen.nix-ide",
                     "editor.formatOnSave": true,
                 },
                 "biome.enabled": true,
@@ -311,7 +305,7 @@
         };
         nix = pkgs.mkShell {
           nativeBuildInputs = [
-            inputs.alejandra.defaultPackage.${system}
+            pkgs.nixfmt-rfc-style
             inputs.nil.packages.${system}.default
           ];
         };
@@ -356,6 +350,6 @@
       }
     );
 
-    formatter = nixpkgs.lib.genAttrs supportedSystems (system: inputs.alejandra.defaultPackage.${system});
+    formatter = nixpkgs.lib.genAttrs supportedSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
   };
 }

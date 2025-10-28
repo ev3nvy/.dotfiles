@@ -33,8 +33,8 @@
     # })
     gh
     keepassxc
-    inputs.alejandra.defaultPackage.${pkgs.system}
     inputs.nil.packages.${pkgs.system}.default
+    nixfmt-rfc-style
     nerd-fonts.jetbrains-mono
   ];
 

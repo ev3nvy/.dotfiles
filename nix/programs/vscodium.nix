@@ -51,7 +51,6 @@
   ];
   nixExtensions = with extensionsNix.open-vsx; [
     jnoortheen.nix-ide
-    kamadorueda.alejandra
   ];
   pythonExtensions = with extensionsNix.open-vsx; [
     charliermarsh.ruff

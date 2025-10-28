@@ -111,7 +111,7 @@
         "editor.wordWrap": "off",
     },
     "[nix]": {
-        "editor.defaultFormatter": "kamadorueda.alejandra",
+        "editor.defaultFormatter": "jnoortheen.nix-ide",
         "editor.formatOnSave": true,
     },
     "[python]": {
