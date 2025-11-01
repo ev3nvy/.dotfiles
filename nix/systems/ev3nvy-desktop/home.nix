@@ -74,6 +74,8 @@
     eza.enable = true;
     ghostty = {
       enable = true;
+      # use the latest "tip", mainly because it finally introduced a scrollbar
+      package = inputs.ghostty.packages.${pkgs.system}.default;
       enableBashIntegration = true;
       enableFishIntegration = true;
       settings = {
